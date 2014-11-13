@@ -1,0 +1,21 @@
+
+p {
+	font-family: 'Arimo', sans-serif;
+	font-size:16px;
+}
+
+h3 {
+	font-family: Century Gothic, sans-serif;;
+	color:#36648b;
+	/*text-align:center;*/
+}
+
+span {
+	color:#cc0000;
+	font-size:24px;
+}
+
+.jobTitle {
+  color:#cc0000;
+  font-size:24px;
+}
