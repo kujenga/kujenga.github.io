@@ -3,6 +3,25 @@ body {
   background-color: #F6F7F0;
 }
 
+#header {
+	margin-bottom: 10px;
+  background-color: #DDEEDD;
+  position:fixed;
+  width: 100%;
+}
+
+#footer {
+  height: 100px;
+  background-color: #DDEEDD;
+  clear: both;
+}
+
+.resume_body {
+	float: left;
+  margin-top: 300px;
+	margin-bottom: 10px;
+}
+
 p {
 	font-family: 'Arimo', sans-serif;
 	font-size: 1.0em;
@@ -12,9 +31,35 @@ p.header {
   font-size: 1.1em;
   font-weight: bold;
   font-variant: smallcaps;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
-.body {
+p.date {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+p.body {
+  margin-left: 30px;
+  margin-right: 20px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.resume_item {
+  border: 1px solid grey;
+  margin: 5px;
+}
+
+.personal_links {
+  margin: 10px;
+  display: inline-block;
+}
+
+#peckappstore {
 
 }
 
@@ -24,10 +69,10 @@ h3 {
 	/*text-align:center;*/
 }
 
-span {
+/*span {
 	color:#cc0000;
 	font-size:24px;
-}
+}*/
 
 .jobTitle {
   color:#cc0000;

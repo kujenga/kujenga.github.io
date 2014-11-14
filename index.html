@@ -6,48 +6,62 @@
 	<link type="text/css" rel="stylesheet" href="stylesheet.css"/>
 </head>
 <body>
-  <div align="center">
+  <div id="header" align="center">
     <h1>Aaron Taylor</h1>
-    <h3>Williams College - Class of 2016</h2>
+    <h3>Williams College - Class of 2016</h3>
     <p><strong>Major:</strong> Computer Science</p>
     <p>
-      <a href="https://www.github.com/kujenga" target=newtab>
-        <img src="github.png" width="50px" height="50px" ></img>
-      </a>
-      <a href="https://www.linkedin.com/in/ataylor0123" target=newtab>
-        <img src="linkedin.png" width="50px" height="50px" ></img>
-      </a>
+      <div class="personal_links">
+        <a href="https://www.github.com/kujenga" target=newtab>
+          <img src="github.png" width="50px" height="50px" ></img>
+        </a>
+      </div>
+      <div class="personal_links">
+        <a href="https://www.linkedin.com/in/ataylor0123" target=newtab>
+          <img src="linkedin.png" width="50px" height="50px" ></img>
+        </a>
+      </div>
     </p>
   </div>
 
-  <div>
+  <div class="resume_body">
     <h2>Resume</h2>
     <div>
       <h3>Education</h3>
+      <p> <span class="bold" style="color: purple">Williams College</span> - Class of 2016 </p>
+      <p> <span class="bold">Major:</span> Computer Science </p>
+      <p>
+        <span class="bold">Favorite Coursework:</span> Distributed Systems, Data Mining, Principles of Programming Languages, Computer Architecture and Organization, Mobile Application Development, Introduction to Cryptography, Computer Graphics, Computer Vision for Digital Cinema
+      </p>
+
     </div>
     <div>
       <h3>Experience and Projects</h3>
 
-      <div>
-        <p class="header">Head Developer, Peck App</p>
-        <p>Fall 2013 - Present</p>
-        <a href="https://itunes.apple.com/tr/app/peck-social-calendaring-event/id912464190?mt=8" target=newtab>App Store Link</a>
+      <div class="resume_item">
+        <p class="header">Head Developer, <a class="header_link" href="https://www.peckapp.com">Peck App</a></p>
+        <p class="date">Fall 2013 - Present</p>
+        <a id="appstore" href="https://itunes.apple.com/tr/app/peck-social-calendaring-event/id912464190?mt=8" target=newtab>
+          <div id="peckappstore">
+            <img src="peck.png" alt="Peck App Store Link" height="50px" width="50px"/>
+          </div>
+        </a>
         <p class="body">
           Started a company after pitching at and winning the annual Williams College Business Plan Competition. Formed a team of 5 other CS majors, paid to work full-time last summer. I lead development of full-stack mobile application for iOS and Android with a Ruby on Rails backend, taking part in creating every piece of the project. Four servers run the webservice in a distributed environment and the application is now live on the iOS App Store. Peck is a social calendaring service for college students providing information and event-based communication within groups. I designed a robust system for repetitively scraping websites of any format for reliable integrations with the front end of any existing calendaring system.
         </p>
       </div>
 
-      <div>
-        <p class="header">Winter Intern, New Signature</p>
-        <p>January 2014</p>
+      <div class="resume_item">
+        <p class="header">Winter Intern, <a class="header_link" href="https://www.newsignature.com">New Signature</a></p>
+        <p class="date">January 2014</p>
         <p class="body">
           Researching and beginning implementation of a system for knowledge management and intellectual property creation for diagnostic, configurational, and procedural toolsets, with goals of internal efficiency, expanded services, and competitive advantage in the field of IT. Created an online advertising campaign mirroring ongoing sales initiatives.
         </p>
       </div>
 
-      <div>
-        <p class="header">iPhone app development, Williams Computer Science Department</p>
-        <p>Spring 2013 - Present</p>
+      <div class="resume_item">
+        <p class="header">iPhone app development, <a class="header_link" href="https://cs.williams.com">Williams Computer Science Department</a></p>
+        <p class="date">Spring 2013 - Present</p>
         <p class="body">
           Created an app to provide a simpler and more intuitive interface for daily and late night snack bar menus that uses data scraped from the existing online dining resources.
         </p>
@@ -55,22 +69,23 @@
 
       <div>
         <h4>Projects</h4>
-        <div>
+        <div class="resume_item">
           <p class="header">Compiling Interpreter for x86 assembly written in ARM assembly</p>
+          <p class="date">Fall 2013</p>
           <p class="body">
             Created the fastest interpreter in my Computer scrightecture class for large programs by compiling instructions read commands of the x86 instruction set into mappes sequences of ARM instructions which allowed loops to be executed much faster than if they had to be interpreted every time.
           </p>
         </div>
-        <div>
+        <div class="resume_item">
           <p class="header">Microcontroller based Motorized camera dolly</p>
-          <p>Fall 2013</p>
+          <p class="date">Fall 2013</p>
           <p class="body">
             A motor-controlled dolly to make smooth-tracking video shots. Physical components designed in CAD and build using a laser cutter. Programmed Arduino and stepper motor controller to operate the system.
           </p>
         </div>
-        <div>
+        <div class="resume_item">
           <p class="header">Electric Powered Off-Road Vehicle</p>
-          <p>Summer 2011 - Fall 2013</p>
+          <p class="date">Summer 2011 - Fall 2013</p>
           <p class="body">
             Hand-fabricated a full-suspension metal frame from around 80 feet of steel tubing. Designed the electronics system for the power train, used CAD software to design the motor and control board mounts and drivetrain assembly and create custom fabricated parts.
           </p>
@@ -89,6 +104,9 @@
         </li>
       </ul>
     </div>
+  </div>
+  <div id="footer">
+
   </div>
 </body>
 </html>
