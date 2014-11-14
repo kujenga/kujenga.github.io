@@ -1,7 +1,21 @@
 
+body {
+  background-color: #F6F7F0;
+}
+
 p {
 	font-family: 'Arimo', sans-serif;
-	font-size:16px;
+	font-size: 1.0em;
+}
+
+p.header {
+  font-size: 1.1em;
+  font-weight: bold;
+  font-variant: smallcaps;
+}
+
+.body {
+
 }
 
 h3 {
