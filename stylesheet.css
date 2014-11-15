@@ -4,6 +4,10 @@ body {
   margin-left: 40px;
 }
 
+a {
+  text-decoration: none;
+}
+
 /*Header Styling*/
 
 #header {
@@ -19,6 +23,26 @@ body {
   display: inline-block;
   margin-top:40px;
   margin-left:20px;
+}
+
+#navigation {
+  margin: auto;
+}
+
+.page_nav {
+  -webkit-transition: 0.4s ease;
+  transition: 0.4s ease
+}
+
+.page_nav a {
+    font-family: "avenir", sans-serif;
+    color: #1d2123;
+    font-size: 15px;
+    font-size: 0.9375rem;
+    line-height: inherit;
+    text-transform: uppercase;
+    font-weight: 400;
+    letter-spacing: 0.0625em
 }
 
 #social_links {
@@ -46,7 +70,7 @@ body {
 }
 
 p {
-	font-family: 'Arimo', sans-serif;
+	font-family: "avenir", sans-serif;
 	font-size: 1.0em;
 }
 
