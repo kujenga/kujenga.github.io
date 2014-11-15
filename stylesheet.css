@@ -1,38 +1,47 @@
 
 body {
   background-color: #F6F7F0;
+  margin-left: 40px;
 }
 
 /*Header Styling*/
 
 #header {
 	margin-bottom: 10px;
-  background-color: #DDEEDD;
-  position:fixed;
+  background-image: url('view.jpg');
+  /*position:fixed;*/
   width: 100%;
+  height: 300px;
 }
 
 .personal_info {
   float: left;
   display: inline-block;
+  margin-top:40px;
   margin-left:20px;
 }
 
 #personal_links {
   float: right;
   doisplay: inline-block;
-  margin:20px;
+  margin-top:10px;
+  margin-right:20px;
 }
 
 .social_link {
   margin: 10px;
   display: inline-block;
-
+  opacity: 0.6;
 }
+
+.social_link:hover {
+  opacity: 1.0;
+}
+
+/*Body of the Resume Page*/
 
 .resume_body {
 	float: left;
-  margin-top: 150px;
 	margin-bottom: 10px;
 }
 
