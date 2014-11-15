@@ -31,12 +31,26 @@ a {
   list-style-type: none;
 }
 
-.personal_info a{
+/* All of the text in the navigation bar */
+nav.vert_nav a {
+  font-family: "avenir", sans-serif;
+  color:white;
+  font-size: 15px;
+  font-size: 0.9375rem;
+  line-height: inherit;
+  text-transform: uppercase;
+  font-weight: 400;
+  letter-spacing: 0.0625em
+}
+
+.personal_info {
   float: left;
-  display: inline-block;
-  margin-top:40px;
-  margin-left:20px;
-  -webkit-transform: translateX(-28%);
+  -webkit-transition: 0.4s ease;
+  transition: 0.4s ease
+  display: none;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translate(-28%, -70%);
 }
 
 .page_nav {
@@ -49,37 +63,28 @@ a {
   -webkit-transform: translate(-28%, -70%);
 }
 
-nav.vert_nav a {
-  font-family: "avenir", sans-serif;
-  color:white;
-  font-size: 15px;
-  font-size: 0.9375rem;
-  line-height: inherit;
-  text-transform: uppercase;
-  font-weight: 400;
-  letter-spacing: 0.0625em
-}
-
 .page_nav li a {
   position: relative;
   display: block;
-  height: 60px;
-  height: 3.75rem;
+  height: 80px;
+  height: 4rem;
+}
+
+.page_nav li a:hover {
+  text-shadow: #EEEE00 0 0 10px;
 }
 
 #social {
   float: bottom;
   display: block;
   margin-left:-50px;
-
-  /*display: none;*/
   position: absolute;
-  top: calc(100% - 200px);
+  top: calc(100% - 220px);
   width: 100%;
 }
 
 .social_link {
-  margin: 10px;
+  margin: 20px;
   display: block;
   opacity: 0.6;
 }
@@ -97,6 +102,7 @@ Body of the Resume Page
   position: relative;
 	margin-bottom: 10px;
   margin-left: 90px;
+  margin-right: 10px;
 }
 
 p {
