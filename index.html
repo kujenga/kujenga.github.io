@@ -16,6 +16,9 @@
       ga('create', 'UA-56787812-1', 'auto');
       ga('send', 'pageview');
     </script>
+
+    <!-- Javascript and jquery -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   </head>
   <body>
     <nav class="vert_nav">
@@ -69,12 +72,13 @@
         <h3 id="experience">Experience</h3>
 
         <div class="resume_item">
-          <p class="header">Head Developer, <a class="header_link" href="https://www.peckapp.com">Peck App</a></p>
-          <p class="date">Fall 2013 - Present</p>
+          <div class="resume_item_header">
+            <p class="header">Head Developer, <a class="header_link" href="https://www.peckapp.com">Peck App</a></p>
+            <p class="date">Fall 2013 - Present</p>
+          </div>
           <a id="appstore" href="https://itunes.apple.com/tr/app/peck-social-calendaring-event/id912464190?mt=8" target=newtab>
             <div id="peckappstore">
-              <img src="peck.png" alt="Peck App Store Link" height="50px" width="50px"/>
-              <p>Link to the App Store</p>
+              <img src="appstore.png" alt="Peck App Store Link" height="50px"/>
             </div>
           </a>
           <p class="body">
@@ -141,7 +145,7 @@
       </div>
       <div>
         <h3>Skills</h3>
-        <ul>
+          <ul class="skills">
           <li>
             <strong>Computer Science: </strong> Objective-C, Ruby, Java, C/C++, Python, Bash, Assembly Language, Distributed Systems, iOS Development, Relational Databases
           </li>

@@ -105,6 +105,16 @@ Body of the Resume Page
   margin-right: 10px;
 }
 
+h2 {
+  font-family: "avenir", sans-serif;
+  font-size: 1.8em;
+}
+
+h3 {
+  font-family: "avenir", sans-serif;
+  font-size: 1.4em;
+}
+
 p {
 	font-family: "avenir", sans-serif;
 	font-size: 1.0em;
@@ -133,23 +143,31 @@ p.body {
 }
 
 .resume_item {
-  border: 1px solid grey;
+  border: 1px solid #999;
   margin: 5px;
 }
 
+.resume_item_header {
+  display:inline-block;
+}
+
 #peckappstore {
-  background_color: white;
-  border: 2px solid grey;
-  width: 300px;
+  margin-left: 20px;
 }
 
 #peckappstore > * {
   display: inline-block;
+}
 
-h3 {
-	font-family: Century Gothic, sans-serif;;
+/*h3 {
+	font-family: Century Gothic, sans-serif;
 	color:#36648b;
-	/*text-align:center;*/
+	text-align:center;
+}*/
+
+.skills li {
+  font-family: "avenir", sans-serif;
+  font-size: 1.0em;
 }
 
 .jobTitle {
@@ -160,7 +178,7 @@ h3 {
 /*Footer links and styling*/
 
 #footer {
-  height: 100px;
+  height: 20px;
   background-color: #DDEEDD;
   clear: both;
 }
