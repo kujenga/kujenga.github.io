@@ -20,7 +20,7 @@ a {
   position: fixed;
   bottom:2%;
   right:2%;
-  background: rgba(200, 54, 54, 0.5);;
+  background: rgba(200, 54, 54, 0.5);
   z-index: 10;
 }
 #in_progress > p {
@@ -61,8 +61,7 @@ nav.vert_nav a {
 .personal_info {
   float: left;
   -webkit-transition: 0.4s ease;
-  transition: 0.4s ease
-  display: none;
+  transition: 0.4s ease;
   position: absolute;
   top: 50%;
   -webkit-transform: translate(-28%, -70%);
@@ -71,8 +70,7 @@ nav.vert_nav a {
 .page_nav {
   float: left;
   -webkit-transition: 0.4s ease;
-  transition: 0.4s ease
-  display: none;
+  transition: 0.4s ease;
   position: absolute;
   top: 50%;
   -webkit-transform: translate(-28%, -70%);
