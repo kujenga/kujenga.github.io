@@ -92,7 +92,7 @@ nav.vert_nav a {
   display: block;
   margin-left:-50px;
   position: absolute;
-  top: calc(100% - 220px);
+  top: calc(100% - 320px);
   width: 100%;
 }
 
