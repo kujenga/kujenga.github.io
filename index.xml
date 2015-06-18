@@ -2,59 +2,124 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>ataylor.io</title>
-    <link>https://ataylor.io/</link>
+    <link>http://localhost:1313/</link>
     <description>Recent content on ataylor.io</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 17 Jun 2015 01:04:26 -0400</lastBuildDate>
-    <atom:link href="https://ataylor.io/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>Publicizing thoughts</title>
-      <link>https://ataylor.io/blog/first/</link>
+      <title>Taking time off</title>
+      <link>http://localhost:1313/blog/timeoff/</link>
       <pubDate>Wed, 17 Jun 2015 01:04:26 -0400</pubDate>
       
-      <guid>https://ataylor.io/blog/first/</guid>
-      <description>&lt;p&gt;Peering into my soul&amp;hellip;&lt;/p&gt;
+      <guid>http://localhost:1313/blog/timeoff/</guid>
+      <description>&lt;p&gt;&amp;hellip;more coming soon&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Electric Powered Off-Road Vehicle</title>
-      <link>https://ataylor.io/proj/gokart/</link>
+      <link>http://localhost:1313/proj/gokart/</link>
       <pubDate>Tue, 16 Jun 2015 23:12:19 -0400</pubDate>
       
-      <guid>https://ataylor.io/proj/gokart/</guid>
-      <description>&lt;p&gt;Hand-fabricated a full-suspension metal frame from raw of steel tubing. Designed the electronics system for the power train, used CAD software to design the motor and control board mounts and drivetrain assembly and create custom fabricated parts.&lt;/p&gt;
+      <guid>http://localhost:1313/proj/gokart/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;http://localhost:1313/img/proj/gokart_wide.jpg&#34; alt=&#34;Go kart in action&#34; width=&#34;80%&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;Hand-fabricated a full-suspension metal frame from raw of steel tubing. Designed the electronics system for the power train, used CAD software to design the motor and control board mounts and drivetrain assembly and create custom fabricated parts.&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Replicated hosting within a P2P marketplace</title>
-      <link>https://ataylor.io/proj/p2pmkt/</link>
+      <link>http://localhost:1313/proj/p2pmkt/</link>
       <pubDate>Tue, 16 Jun 2015 23:11:40 -0400</pubDate>
       
-      <guid>https://ataylor.io/proj/p2pmkt/</guid>
+      <guid>http://localhost:1313/proj/p2pmkt/</guid>
       <description>&lt;p&gt;Created a fork of the OpenBazaar decentralized marketplace project in its early stages to emulate a hosted site environment within a P2P network. Used the Entangled implementation of a Kademlia distributed hash table to facilitate replicated storage of a user’s site across multiple peers.&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>About me</title>
-      <link>https://ataylor.io/about/</link>
+      <link>http://localhost:1313/about/</link>
       <pubDate>Tue, 16 Jun 2015 22:59:46 -0400</pubDate>
       
-      <guid>https://ataylor.io/about/</guid>
-      <description>&lt;p&gt;I am a full-stack developer with a track record of delivering on ambitious projects in both a professional and academic setting. As a cofounder of Peck, I lead a team of developers in the development of a mobile application and web service. I aspire to maintain a holistic vision for a product while managing and participating in the development process. I have experience with a wide variety of technologies that provide me with a strong basis for designing and developing computer systems. I have studied Computer Science at Williams College and the Aquincum Institute of Technology, and am currently taking time off from school to work on a startup in Boston.&lt;/p&gt;
+      <guid>http://localhost:1313/about/</guid>
+      <description>
+
+&lt;p&gt;I am a full-stack developer with a track record of delivering on ambitious projects in both a professional and academic setting. As a cofounder of Peck, I lead a team of developers in the development of a mobile application and web service. I aspire to maintain a holistic vision for a product while managing and participating in the development process. I have experience with a wide variety of technologies that provide me with a strong basis for designing and developing computer systems. I have studied Computer Science at Williams College and the Aquincum Institute of Technology, and am currently taking time off from school to work on a startup in Boston.&lt;/p&gt;
+
+&lt;h2 id=&#34;experience:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Experience&lt;/h2&gt;
+
+&lt;h3 id=&#34;co-founder-and-cto-meta:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Co-Founder and CTO, Meta&lt;/h3&gt;
+
+&lt;h4 id=&#34;january-2015-present:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;January 2015 - present&lt;/h4&gt;
+
+&lt;p&gt;Developing a cloud platform that brings the power of a search engine to a user&amp;rsquo;s own files. Architecting a service-based backend to provide a single user experience for file search and organization. It analyzes files with a similar intent to how a search engine would analyze the web, providing SmartTags based on found concepts and ideas.&lt;/p&gt;
+
+&lt;h3 id=&#34;head-developer-and-cofounder-peck-app:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Head Developer and Cofounder, Peck App&lt;/h3&gt;
+
+&lt;h4 id=&#34;fall-2013-january-2015:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Fall 2013 - January 2015&lt;/h4&gt;
+
+&lt;p&gt;Won the annual Williams College Business Plan Competition and hired a team of 5 to work out of Lever. Lead development of a mobile app for iOS and Android with Ruby on Rails backend. Now live on the iOS App Store. Peck is a social calendaring service for college students providing information and event-based communication.&lt;/p&gt;
+
+&lt;h3 id=&#34;winter-intern-new-signature:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Winter Intern, New Signature&lt;/h3&gt;
+
+&lt;h4 id=&#34;january-2014:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;January 2014&lt;/h4&gt;
+
+&lt;p&gt;Designed a system for knowledge management and intellectual property creation for diagnostic, configurational, and procedural toolsets with goals of internal efficiency and expanded services in the field of IT consulting.&lt;/p&gt;
+
+&lt;h3 id=&#34;filmmaker-berkshire-productions:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Filmmaker, Berkshire Productions&lt;/h3&gt;
+
+&lt;h4 id=&#34;2007-2014:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;2007-2014&lt;/h4&gt;
+
+&lt;p&gt;Founded a filmmaking and videography business with more than 160 jobs for over 40 clients, learning about marketing and content creation, and a wide variety of cinema technologies, hardware, and software.&lt;/p&gt;
+
+&lt;h3 id=&#34;iphone-app-development-williams-computer-science-department:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;iPhone app development, Williams Computer Science Department&lt;/h3&gt;
+
+&lt;h4 id=&#34;spring-2013-present:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Spring 2013 - present&lt;/h4&gt;
+
+&lt;p&gt;Created an app, HungryEph, to provide a simpler and more intuitive interface for daily and late night snack bar menus that uses data scraped from the existing online dining resources. Currently in use by Williams students.&lt;/p&gt;
+
+&lt;h2 id=&#34;projects:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Projects&lt;/h2&gt;
+
+&lt;h3 id=&#34;compiling-interpreter-for-x86-machine-code-written-in-arm-assembly-language:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Compiling Interpreter for x86 machine code written in ARM assembly language&lt;/h3&gt;
+
+&lt;p&gt;Created the fastest interpreter in my Computer Architecture class by compiling translated instructions of the x86 instruction set into mapped sequences of ARM instructions allowing for much faster runtimes.&lt;/p&gt;
+
+&lt;h3 id=&#34;replicated-hosting-within-a-p2p-marketplace:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Replicated Hosting within a P2P Marketplace&lt;/h3&gt;
+
+&lt;p&gt;Forked the OpenBazaar project in its early stages to emulate a hosted site environment within a P2P network. Used a Kademlia distributed hash table to facilitate replicated storage of a user’s site across multiple peers.&lt;/p&gt;
+
+&lt;h3 id=&#34;electric-powered-off-road-vehicle-summer-2011-fall-2013:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Electric Powered Off-Road Vehicle - Summer 2011 - Fall 2013&lt;/h3&gt;
+
+&lt;p&gt;Hand-fabricated a full-suspension metal frame from raw steel tubing. Designed the power train electronics system, used CAD software to design and fabricate control board, motor mount, and drivetrain assembly.&lt;/p&gt;
+
+&lt;h2 id=&#34;education:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Education&lt;/h2&gt;
+
+&lt;h3 id=&#34;williams-college-junior-class-of-2016:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Williams College — Junior, class of 2016&lt;/h3&gt;
+
+&lt;h4 id=&#34;major-computer-science:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Major: Computer Science&lt;/h4&gt;
+
+&lt;p&gt;&lt;strong&gt;Selected Coursework:&lt;/strong&gt; Distributed Systems, Data Mining, Computer Architecture, Principles of Programming Languages, Mobile App Development, Intro to Cryptography, Computer Graphics, Computer Vision&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;TA:&lt;/strong&gt; Principles of Programming Languages (Spring 2015), Intro to Computer Science (Fall 2013, Spring 2014)&lt;/p&gt;
+
+&lt;h4 id=&#34;skills:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Skills&lt;/h4&gt;
+
+&lt;p&gt;Computer Science: Objective-C, Swift, Ruby, Java, C/C++, Python, Bash, Assembly Language, Distributed Systems, iOS Development, Relational Databases
+Other Interests: Metalworking and Fabrication, Woodworking, Piano (15 years), Williams Cycling Club, Williams Sailing Team, Williams Nordic Ski Club, Hiking, Film&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Compiling Interpreter for x86 written in ARM</title>
-      <link>https://ataylor.io/proj/x86toarm/</link>
+      <link>http://localhost:1313/proj/x86toarm/</link>
       <pubDate>Tue, 16 Jun 2015 22:57:32 -0400</pubDate>
       
-      <guid>https://ataylor.io/proj/x86toarm/</guid>
+      <guid>http://localhost:1313/proj/x86toarm/</guid>
       <description>&lt;p&gt;Created the fastest assembly language interpreter in my Computer Architecture class for large programs by compiling instructions read commands of the x86 instruction set into mappes sequences of ARM instructions which allowed loops to be executed much faster than if they had to be interpreted every time.&lt;/p&gt;
 </description>
     </item>

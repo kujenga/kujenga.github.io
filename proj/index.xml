@@ -2,39 +2,41 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Projs on ataylor.io</title>
-    <link>https://ataylor.io/proj/</link>
+    <link>http://localhost:1313/proj/</link>
     <description>Recent content in Projs on ataylor.io</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 16 Jun 2015 23:12:19 -0400</lastBuildDate>
-    <atom:link href="https://ataylor.io/proj/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/proj/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Electric Powered Off-Road Vehicle</title>
-      <link>https://ataylor.io/proj/gokart/</link>
+      <link>http://localhost:1313/proj/gokart/</link>
       <pubDate>Tue, 16 Jun 2015 23:12:19 -0400</pubDate>
       
-      <guid>https://ataylor.io/proj/gokart/</guid>
-      <description>&lt;p&gt;Hand-fabricated a full-suspension metal frame from raw of steel tubing. Designed the electronics system for the power train, used CAD software to design the motor and control board mounts and drivetrain assembly and create custom fabricated parts.&lt;/p&gt;
+      <guid>http://localhost:1313/proj/gokart/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;http://localhost:1313/img/proj/gokart_wide.jpg&#34; alt=&#34;Go kart in action&#34; width=&#34;80%&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;Hand-fabricated a full-suspension metal frame from raw of steel tubing. Designed the electronics system for the power train, used CAD software to design the motor and control board mounts and drivetrain assembly and create custom fabricated parts.&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Replicated hosting within a P2P marketplace</title>
-      <link>https://ataylor.io/proj/p2pmkt/</link>
+      <link>http://localhost:1313/proj/p2pmkt/</link>
       <pubDate>Tue, 16 Jun 2015 23:11:40 -0400</pubDate>
       
-      <guid>https://ataylor.io/proj/p2pmkt/</guid>
+      <guid>http://localhost:1313/proj/p2pmkt/</guid>
       <description>&lt;p&gt;Created a fork of the OpenBazaar decentralized marketplace project in its early stages to emulate a hosted site environment within a P2P network. Used the Entangled implementation of a Kademlia distributed hash table to facilitate replicated storage of a user’s site across multiple peers.&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Compiling Interpreter for x86 written in ARM</title>
-      <link>https://ataylor.io/proj/x86toarm/</link>
+      <link>http://localhost:1313/proj/x86toarm/</link>
       <pubDate>Tue, 16 Jun 2015 22:57:32 -0400</pubDate>
       
-      <guid>https://ataylor.io/proj/x86toarm/</guid>
+      <guid>http://localhost:1313/proj/x86toarm/</guid>
       <description>&lt;p&gt;Created the fastest assembly language interpreter in my Computer Architecture class for large programs by compiling instructions read commands of the x86 instruction set into mappes sequences of ARM instructions which allowed loops to be executed much faster than if they had to be interpreted every time.&lt;/p&gt;
 </description>
     </item>
