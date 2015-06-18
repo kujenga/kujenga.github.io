@@ -1,9 +1,17 @@
 body {
-    padding-top: 50px;
+    padding-top: 75px;
 }
 
 .lead {
     padding-top: 30px;
+}
+
+.jumbotron {
+    margin-top: -25px;
+    /*height: 350px;*/
+    color: black;
+    /*text-shadow: #444 0 1px 1px;*/
+    background: url("../img/view-med.jpg");
 }
 
 .jumbotron > .container {
@@ -13,16 +21,17 @@ body {
     text-align: center;
 }
 
-.jumbotron {
-    /*height: 350px;*/
-    color: black;
-    /*text-shadow: #444 0 1px 1px;*/
-    background: url("../img/view-med.jpg");
-}
-
 /*Footer*/
 .footer {
-    background: #abc;
+    margin-top: 50px;
+    margin-bottom: 25px;
+
+    border: solid 1px #eee;
+
+    background: -webkit-linear-gradient(#eee, #fff, #fff, #fff, #fff); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#eee, #fff, #fff, #fff, #fff); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#eee, #fff, #fff, #fff, #fff); /* For Firefox 3.6 to 15 */
+    background: repeating-linear-gradient(#eee, #fff, #fff, #fff, #fff); /* Standard syntax */
 }
 
 /*Social Links*/
@@ -33,8 +42,8 @@ body {
 
     transition: all .3s ease-in-out;
 
-    color: #fff;
-    border: solid 2px #fff;
+    color: #ddd;
+    border: solid 2px #ddd;
     background: 0 0;
 }
 
@@ -42,8 +51,8 @@ body {
 .btn-outline:focus,
 .btn-outline:active,
 .btn-outline.active {
-    color: #18bc9c;
-    border: solid 2px #fff;
+    color: #999;
+    border: solid 2px #999;
     background: #fff;
 }
 .btn-social {
