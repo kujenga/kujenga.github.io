@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Blogs on Aaron Taylor</title>
-    <link>https://kujenga.github.io/blog/</link>
-    <description>Recent content in Blogs on Aaron Taylor</description>
+    <title>Cgo on Aaron Taylor</title>
+    <link>http://localhost:1313/tags/cgo/</link>
+    <description>Recent content in Cgo on Aaron Taylor</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 20 Jun 2015 22:23:41 -0400</lastBuildDate>
-    <atom:link href="https://kujenga.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/cgo/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Linking Dynamic C&#43;&#43; Libraries with Go</title>
-      <link>https://kujenga.github.io/blog/cgolinking/</link>
+      <link>http://localhost:1313/blog/cgolinking/</link>
       <pubDate>Sat, 20 Jun 2015 22:23:41 -0400</pubDate>
       
-      <guid>https://kujenga.github.io/blog/cgolinking/</guid>
+      <guid>http://localhost:1313/blog/cgolinking/</guid>
       <description>
 
 &lt;p&gt;These days, I spend a lot of time working with, designing, and implementing APIs. Since &lt;a href=&#34;https://meta.sc&#34;&gt;Meta&lt;/a&gt; is a microservices based application, the contracts that those APIs provide are crucial to designing the interactions with them. Quickly, maintaining good documentation and client libraries becomes nearly as important of a part of the applications as the code itself. Each step forward in functionality must provide solid footing to keep on building.&lt;/p&gt;
@@ -147,51 +147,21 @@ FAIL    github.com/kujenga/gosnow [build failed]
 
 &lt;h2 id=&#34;continuous-integration:f0f98a633f4540118f1ad2a10a32d79e&#34;&gt;Continuous Integration&lt;/h2&gt;
 
-&lt;p&gt;These days, it seems like any open source library or project worth its salt has a continuous integration setup and test coverage metrics proudly displayed at the top of its README file. This would require building the project on a Linux machine in the cloud. As I saw while digging into Ruby&amp;rsquo;s FFI source code, there are a number of things to be aware of when compiling on Linux. I&amp;rsquo;m punting on Windows support for now, although theoretically it wouldn&amp;rsquo;t be too difficult.&lt;/p&gt;
+&lt;p&gt;These days, it seems like any open source library or project worth its salt has a continuous integration setup and test coverage metrics proudly displayed at the top of its README file.&lt;/p&gt;
 
-&lt;p&gt;There are two differences in the compilation of the Drafter library to be aware of. The first is in the location of the compiled result. On Linux, it is a directory below where it is on Mac in a &lt;code&gt;lib.target/&lt;/code&gt; folder. Secondly, it has an extension of &lt;code&gt;.so&lt;/code&gt; rather than &lt;code&gt;.dylib&lt;/code&gt;. Taking these into account, I was still having trouble providing the library to the Go code at runtime. The package could not be installed without the use of &lt;code&gt;sudo&lt;/code&gt; in the CI configuration, which seemed like an ugly fix.&lt;/p&gt;
-
-&lt;p&gt;After experimenting manually on a Linux server, I found that the &lt;code&gt;LD_LIBRARY_PATH&lt;/code&gt; environment variable, which I had run into earlier in my research but was unhelpful on the Mac, solved my problem quite nicely. By specifying the proper path as an environment variable in the CI setup, I was able to get a working build on &lt;a href=&#34;https://travis-ci.org/kujenga/gosnow&#34;&gt;Travis-CI&lt;/a&gt;. To monitor test coverage of the library, I setup the Travis build to send reports to &lt;a href=&#34;https://coveralls.io/r/kujenga/gosnow&#34;&gt;Coveralls&lt;/a&gt; using the &lt;a href=&#34;https://github.com/mattn/goveralls&#34;&gt;goveralls&lt;/a&gt; library. With a link to the &lt;a href=&#34;https://godoc.org/github.com/kujenga/gosnow&#34;&gt;godoc&lt;/a&gt; for this project, things were looking good!&lt;/p&gt;
-
-&lt;h2 id=&#34;implementation:f0f98a633f4540118f1ad2a10a32d79e&#34;&gt;Implementation&lt;/h2&gt;
-
-&lt;p&gt;With the example code working, I began implementing functionality similar to that provided by the Ruby library, with structured, parsed versions of the JSON output from Drafter nicely formatted into Go structs. It&amp;rsquo;s a rather complex data structure to represent, but I was able to replicate the elements of the abstract syntax tree, defined in the &lt;a href=&#34;https://github.com/apiaryio/snowcrash/blob/master/src/Blueprint.h&#34;&gt;&lt;code&gt;Blueprint.h&lt;/code&gt;&lt;/a&gt; file within the Snow Crash library. My version was mostly a port of what is present in the RedSnow library currently. Still remaining is the task of providing struct-based representation of the sourcemap format, as specified in the &lt;a href=&#34;https://github.com/apiaryio/snowcrash/blob/master/src/BlueprintSourcemap.h&#34;&gt;&lt;code&gt;BlueprintSourcemap.h&lt;/code&gt;&lt;/a&gt; file in the Snow Crash repository. I also wrote a series of tests utilizing the [fixtures]() from RedSnow as well as some of my own. I still have some work to do to ensure that there is complete parity between the structs I created and the syntax specification itself, but at the very least the code runs without errors.&lt;/p&gt;
-
-&lt;h3 id=&#34;improvements:f0f98a633f4540118f1ad2a10a32d79e&#34;&gt;Improvements&lt;/h3&gt;
-
-&lt;p&gt;There are a few things which could be improved about the installation and function of this library. Firstly, to encapsulate the behavior necessary to install this library, I created a makefile with the appropriate options for the various build environments that the code would be running in. Go is trying to move away from tooling that isn&amp;rsquo;t endogenous to Go itself, so a better solution here is desired.&lt;/p&gt;
-
-&lt;p&gt;Additionally, in order to get cgo to compile properly for both Mac and the Linux CI server, I added both possible directories to the flags specified in my Go code. This works, but causes warnings at compile time which I would like to eliminate.&lt;/p&gt;
-
-&lt;p&gt;At its core, the frustration here is that the &lt;code&gt;go get&lt;/code&gt; command, which generally provides a universal way to simply install a go library, does not accomplish what we want in this case. The best option here is to use the &lt;a href=&#34;http://www.freedesktop.org/wiki/Software/pkg-config/&#34;&gt;pkg-config&lt;/a&gt; specification to enumerate what must occur to install this library. This &lt;a href=&#34;http://www.goinggo.net/2013/08/using-cgo-with-pkg-config-and-custom.html&#34;&gt;blog post&lt;/a&gt; has a great example of doing just that which I plan to pursue in the future.&lt;/p&gt;
-
-&lt;p&gt;One concession that would have to be made in order to make this library &amp;ldquo;go gettable&amp;rdquo; is to vendor the Drafter library within the repository itself. As is documented by &lt;a href=&#34;https://github.com/golang/go/issues/7764&#34;&gt;Golang issue 7764&lt;/a&gt;, git submodules, which I am currently using to keep track of Drafter, are not automatically retrieved by the &lt;code&gt;go get&lt;/code&gt; tool, and it is uncertain whether they ever will be. I&amp;rsquo;ll be keeping an eye on that issue.&lt;/p&gt;
-
-&lt;h3 id=&#34;future-work:f0f98a633f4540118f1ad2a10a32d79e&#34;&gt;Future Work&lt;/h3&gt;
-
-&lt;p&gt;I touched briefly on how defining APIs is crucial to my work at &lt;a href=&#34;https://meta.sc&#34;&gt;Meta&lt;/a&gt;. My eventual goal with this library is to build off of it to use out existing documentation for our APIs to generate arbitrary other forms of output, including client libraries for our APIs, mock interfaces for testing our micro services, and even things like &lt;a href=&#34;https://www.getpostman.com&#34;&gt;Postman&lt;/a&gt; collections, all from a single API definition. Doing this through Go&amp;rsquo;s built in &lt;a href=&#34;http://blog.golang.org/generate&#34;&gt;code generation&lt;/a&gt; functionality is my next goal, and will likely be the topic of a future blog post.&lt;/p&gt;
+&lt;h2 id=&#34;next-steps:f0f98a633f4540118f1ad2a10a32d79e&#34;&gt;Next Steps&lt;/h2&gt;
 
 &lt;h3 id=&#34;the-code:f0f98a633f4540118f1ad2a10a32d79e&#34;&gt;The Code&lt;/h3&gt;
 
-&lt;p&gt;My code is up on Github at &lt;a href=&#34;https://github.com/kujenga/gosnow&#34;&gt;github.com/kujenga/gosnow&lt;/a&gt;. Check out the &lt;a href=&#34;https://godoc.org/github.com/kujenga/gosnow&#34;&gt;godoc&lt;/a&gt; for information on using the library. Like Drafter and most of the code underneath is, gosnow is MIT Licensed.&lt;/p&gt;
+&lt;p&gt;My code is up on Github at &lt;a href=&#34;https://github.com/kujenga/gosnow&#34;&gt;github.com/kujenga/gosnow&lt;/a&gt;. Like the library it wraps, it is MIT Licensed.&lt;/p&gt;
 
 &lt;h3 id=&#34;references:f0f98a633f4540118f1ad2a10a32d79e&#34;&gt;References&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;http://blog.golang.org/c-go-cgo&#34;&gt;The Go Blog - C? Go? Cgo!&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://www.goinggo.net/2013/08/using-c-dynamic-libraries-in-go-programs.html&#34;&gt;Going Go - Using C Dynamic Libraries In Go Programs&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.goinggo.net/2013/08/using-cgo-with-pkg-config-and-custom.html&#34;&gt;Going Go - Using CGO with Pkg-Config And Custom Dynamic Library Locations&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;/li&gt;
 &lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Taking time off</title>
-      <link>https://kujenga.github.io/blog/timeoff/</link>
-      <pubDate>Wed, 17 Jun 2015 01:04:26 -0400</pubDate>
-      
-      <guid>https://kujenga.github.io/blog/timeoff/</guid>
-      <description>&lt;p&gt;&amp;hellip;more coming soon&lt;/p&gt;
 </description>
     </item>
     
