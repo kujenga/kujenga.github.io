@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Aaron Taylor</title>
-    <link>https://kujenga.github.io/</link>
+    <link>https://ataylor.io/</link>
     <description>Recent content on Aaron Taylor</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 20 Jun 2015 22:23:41 -0400</lastBuildDate>
-    <atom:link href="https://kujenga.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://ataylor.io/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Linking Dynamic C&#43;&#43; Libraries with Go</title>
-      <link>https://kujenga.github.io/blog/cgolinking/</link>
+      <link>https://ataylor.io/blog/cgolinking/</link>
       <pubDate>Sat, 20 Jun 2015 22:23:41 -0400</pubDate>
       
-      <guid>https://kujenga.github.io/blog/cgolinking/</guid>
+      <guid>https://ataylor.io/blog/cgolinking/</guid>
       <description>
 
 &lt;p&gt;These days, I spend a lot of time working with, designing, and implementing APIs. Since &lt;a href=&#34;https://meta.sc&#34;&gt;Meta&lt;/a&gt; is a microservices based application, the contracts that those APIs provide are crucial to designing the interactions with them. Quickly, maintaining good documentation and client libraries becomes nearly as important of a part of the applications as the code itself. Each step forward in functionality must provide solid footing to keep on building.&lt;/p&gt;
@@ -187,11 +187,11 @@ FAIL    github.com/kujenga/gosnow [build failed]
     
     <item>
       <title>my website</title>
-      <link>https://kujenga.github.io/blog/blogging/</link>
+      <link>https://ataylor.io/blog/blogging/</link>
       <pubDate>Wed, 17 Jun 2015 01:04:26 -0400</pubDate>
       
-      <guid>https://kujenga.github.io/blog/blogging/</guid>
-      <description>&lt;p&gt;My &lt;a href=&#34;https://kujenga.github.io/old.html&#34;&gt;previous site&lt;/a&gt; was written completely from scratch. It gave me a valuable understanding of web fundamentals, but as my time grows short, I needed something with a little more tooling built in. Still, I wanted tools that I could understand. After working extensively with &lt;a href=&#34;https://golang.org&#34;&gt;Go&lt;/a&gt; in my work at &lt;a href=&#34;https://meta.sc&#34;&gt;Meta&lt;/a&gt;, I felt I had a good enough understanding of its templating system to commit to using it as a the building blocks for my own website. &lt;a href=&#34;http://gohugo.io&#34;&gt;Hugo&lt;/a&gt; seemed a great candidate to build my site off of, and it would be a great test run for what would eventually become the foundation of &lt;a href=&#34;https://github.com/rastech/website&#34;&gt;Meta&amp;rsquo;s &amp;ldquo;new&amp;rdquo; website&lt;/a&gt;, at least in the backend generation.&lt;/p&gt;
+      <guid>https://ataylor.io/blog/blogging/</guid>
+      <description>&lt;p&gt;My &lt;a href=&#34;https://ataylor.io/old.html&#34;&gt;previous site&lt;/a&gt; was written completely from scratch. It gave me a valuable understanding of web fundamentals, but as my time grows short, I needed something with a little more tooling built in. Still, I wanted tools that I could understand. After working extensively with &lt;a href=&#34;https://golang.org&#34;&gt;Go&lt;/a&gt; in my work at &lt;a href=&#34;https://meta.sc&#34;&gt;Meta&lt;/a&gt;, I felt I had a good enough understanding of its templating system to commit to using it as a the building blocks for my own website. &lt;a href=&#34;http://gohugo.io&#34;&gt;Hugo&lt;/a&gt; seemed a great candidate to build my site off of, and it would be a great test run for what would eventually become the foundation of &lt;a href=&#34;https://github.com/rastech/website&#34;&gt;Meta&amp;rsquo;s &amp;ldquo;new&amp;rdquo; website&lt;/a&gt;, at least in the backend generation.&lt;/p&gt;
 
 &lt;p&gt;So, I cobbled this together using bootstrap and some other bits and pieces from around the web. Since it&amp;rsquo;s a static site and will be hosted on &lt;a href=&#34;https://pages.github.com&#34;&gt;Github Pages&lt;/a&gt;, comments need to be handled externally. I&amp;rsquo;m working on getting comments up and running using &lt;a href=&#34;http://www.discourse.org&#34;&gt;Discourse&lt;/a&gt; on my Digital Ocean droplet, but after running into some roadblocks getting that up and running, for now I&amp;rsquo;ll somewhat begrudgingly be using &lt;a href=&#34;https://disqus.com&#34;&gt;Disqus&lt;/a&gt;.&lt;/p&gt;
 
@@ -201,11 +201,11 @@ FAIL    github.com/kujenga/gosnow [build failed]
     
     <item>
       <title>Electric Powered Off-Road Vehicle</title>
-      <link>https://kujenga.github.io/proj/gokart/</link>
+      <link>https://ataylor.io/proj/gokart/</link>
       <pubDate>Tue, 16 Jun 2015 23:12:19 -0400</pubDate>
       
-      <guid>https://kujenga.github.io/proj/gokart/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;https://kujenga.github.io/img/proj/gokart_wide.jpg&#34; alt=&#34;Go kart in action&#34; width=&#34;800&#34;&gt;&lt;/p&gt;
+      <guid>https://ataylor.io/proj/gokart/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://ataylor.io/img/proj/gokart_wide.jpg&#34; alt=&#34;Go kart in action&#34; width=&#34;800&#34;&gt;&lt;/p&gt;
 
 &lt;p&gt;Hand-fabricated a full-suspension metal frame from raw of steel tubing. Designed the electronics system for the power train, used CAD software to design the motor and control board mounts and drivetrain assembly and create custom fabricated parts.&lt;/p&gt;
 </description>
@@ -213,10 +213,10 @@ FAIL    github.com/kujenga/gosnow [build failed]
     
     <item>
       <title>Replicated hosting within a P2P marketplace</title>
-      <link>https://kujenga.github.io/proj/p2pmkt/</link>
+      <link>https://ataylor.io/proj/p2pmkt/</link>
       <pubDate>Tue, 16 Jun 2015 23:11:40 -0400</pubDate>
       
-      <guid>https://kujenga.github.io/proj/p2pmkt/</guid>
+      <guid>https://ataylor.io/proj/p2pmkt/</guid>
       <description>&lt;p&gt;During the spring of my sophomore year at Williams College I took a project-based distributed systems course. Over the course of the semester in partner projects I worked on server from scratch written in C using a queue-based model to handle requests in a highly resilient manner, a multi-server e-commerce system with an iOS client communicating over XML-RPC, and set up a Hadoop cluster to analyze advertising data, correlating customers to impressions.&lt;/p&gt;
 
 &lt;p&gt;For the final project in the class,&lt;/p&gt;
@@ -225,10 +225,10 @@ FAIL    github.com/kujenga/gosnow [build failed]
     
     <item>
       <title>About me</title>
-      <link>https://kujenga.github.io/about/</link>
+      <link>https://ataylor.io/about/</link>
       <pubDate>Tue, 16 Jun 2015 22:59:46 -0400</pubDate>
       
-      <guid>https://kujenga.github.io/about/</guid>
+      <guid>https://ataylor.io/about/</guid>
       <description>
 
 &lt;p&gt;I am a full-stack developer with a track record of delivering on ambitious projects in both a professional and academic setting. At Meta, I am leading the development of a scalable and modern cloud architecture as we build out a powerful and experienced &lt;a href=&#34;https://meta.sc/careers&#34;&gt;team&lt;/a&gt;. As a Co-Founder of Peck, I lead a team of developers in the development of a mobile application and web service. I aspire to maintain a holistic vision for a product while managing and participating in the development process. I have experience with a wide variety of technologies that provide me with a strong basis for designing and developing computer systems. I have studied Computer Science at Williams College and the Aquincum Institute of Technology, and am currently taking time off from school to work on Meta in Boston.&lt;/p&gt;
@@ -302,10 +302,10 @@ FAIL    github.com/kujenga/gosnow [build failed]
     
     <item>
       <title>Compiling Interpreter for x86 written in ARM</title>
-      <link>https://kujenga.github.io/proj/x86toarm/</link>
+      <link>https://ataylor.io/proj/x86toarm/</link>
       <pubDate>Tue, 16 Jun 2015 22:57:32 -0400</pubDate>
       
-      <guid>https://kujenga.github.io/proj/x86toarm/</guid>
+      <guid>https://ataylor.io/proj/x86toarm/</guid>
       <description>&lt;p&gt;Created the fastest assembly language interpreter in my Computer Architecture class for large programs by compiling instructions read commands of the x86 instruction set into mappes sequences of ARM instructions which allowed loops to be executed much faster than if they had to be interpreted every time.&lt;/p&gt;
 </description>
     </item>
