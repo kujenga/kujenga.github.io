@@ -186,12 +186,16 @@ FAIL    github.com/kujenga/gosnow [build failed]
     </item>
     
     <item>
-      <title>Taking time off</title>
-      <link>https://kujenga.github.io/blog/timeoff/</link>
+      <title>my website</title>
+      <link>https://kujenga.github.io/blog/blogging/</link>
       <pubDate>Wed, 17 Jun 2015 01:04:26 -0400</pubDate>
       
-      <guid>https://kujenga.github.io/blog/timeoff/</guid>
-      <description>&lt;p&gt;&amp;hellip;more coming soon&lt;/p&gt;
+      <guid>https://kujenga.github.io/blog/blogging/</guid>
+      <description>&lt;p&gt;My &lt;a href=&#34;https://kujenga.github.io/old.html&#34;&gt;previous site&lt;/a&gt; was written completely from scratch. It gave me a valuable understanding of web fundamentals, but as my time grows short, I needed something with a little more tooling built in. Still, I wanted tools that I could understand. After working extensively with &lt;a href=&#34;https://golang.org&#34;&gt;Go&lt;/a&gt; in my work at &lt;a href=&#34;https://meta.sc&#34;&gt;Meta&lt;/a&gt;, I felt I had a good enough understanding of its templating system to commit to using it as a the building blocks for my own website. &lt;a href=&#34;http://gohugo.io&#34;&gt;Hugo&lt;/a&gt; seemed a great candidate to build my site off of, and it would be a great test run for what would eventually become the foundation of &lt;a href=&#34;https://github.com/rastech/website&#34;&gt;Meta&amp;rsquo;s &amp;ldquo;new&amp;rdquo; website&lt;/a&gt;, at least in the backend generation.&lt;/p&gt;
+
+&lt;p&gt;So, I cobbled this together using bootstrap and some other bits and pieces from around the web. Since it&amp;rsquo;s a static site and will be hosted on &lt;a href=&#34;https://pages.github.com&#34;&gt;Github Pages&lt;/a&gt;, comments need to be handled externally. I&amp;rsquo;m working on getting comments up and running using &lt;a href=&#34;http://www.discourse.org&#34;&gt;Discourse&lt;/a&gt; on my Digital Ocean droplet, but after running into some roadblocks getting that up and running, for now I&amp;rsquo;ll somewhat begrudgingly be using &lt;a href=&#34;https://disqus.com&#34;&gt;Disqus&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;I plan on posting new and potentially retrospective content on here as my increasingly scarce time allows me to explore things on the side. Hope you enjoy!&lt;/p&gt;
 </description>
     </item>
     

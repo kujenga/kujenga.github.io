@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="If you are hitting roadblocks in trying to communicate with Core Foundation and C APIs directly from Swift, just wrap them in a friendly Objective-C class that provides an simple API for the rest of your application to use.">
+    <meta name="author" content="Aaron Taylor">
+    <link rel="icon" href="../../favicon.ico">
+    <link rel="canonical" href="http://localhost:1313/blog/swiftobjc/">
+    
+
+    
+    <title>Aaron Taylor - Facilitating Idiomatic Swift with Objective-C</title>
+
+    <script type="text/javascript">
+window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){var o=e[n]={exports:{}};t[n][0].call(o.exports,function(e){var o=t[n][1][e];return r(o?o:e)},o,o.exports)}return e[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<n.length;o++)r(n[o]);return r}({QJf3ax:[function(t,e){function n(t){function e(e,n,a){t&&t(e,n,a),a||(a={});for(var c=s(e),f=c.length,u=i(a,o,r),d=0;f>d;d++)c[d].apply(u,n);return u}function a(t,e){f[t]=s(t).concat(e)}function s(t){return f[t]||[]}function c(){return n(e)}var f={};return{on:a,emit:e,create:c,listeners:s,_events:f}}function r(){return{}}var o="nr@context",i=t("gos");e.exports=n()},{gos:"7eSDFh"}],ee:[function(t,e){e.exports=t("QJf3ax")},{}],3:[function(t){function e(t){try{i.console&&console.log(t)}catch(e){}}var n,r=t("ee"),o=t(1),i={};try{n=localStorage.getItem("__nr_flags").split(","),console&&"function"==typeof console.log&&(i.console=!0,-1!==n.indexOf("dev")&&(i.dev=!0),-1!==n.indexOf("nr_dev")&&(i.nrDev=!0))}catch(a){}i.nrDev&&r.on("internal-error",function(t){e(t.stack)}),i.dev&&r.on("fn-err",function(t,n,r){e(r.stack)}),i.dev&&(e("NR AGENT IN DEVELOPMENT MODE"),e("flags: "+o(i,function(t){return t}).join(", ")))},{1:22,ee:"QJf3ax"}],4:[function(t){function e(t,e,n,i,s){try{c?c-=1:r("err",[s||new UncaughtException(t,e,n)])}catch(f){try{r("ierr",[f,(new Date).getTime(),!0])}catch(u){}}return"function"==typeof a?a.apply(this,o(arguments)):!1}function UncaughtException(t,e,n){this.message=t||"Uncaught error with no additional information",this.sourceURL=e,this.line=n}function n(t){r("err",[t,(new Date).getTime()])}var r=t("handle"),o=t(6),i=t("ee"),a=window.onerror,s=!1,c=0;t("loader").features.err=!0,t(5),window.onerror=e;try{throw new Error}catch(f){"stack"in f&&(t(1),t(2),"addEventListener"in window&&t(3),window.XMLHttpRequest&&XMLHttpRequest.prototype&&XMLHttpRequest.prototype.addEventListener&&window.XMLHttpRequest&&XMLHttpRequest.prototype&&XMLHttpRequest.prototype.addEventListener&&!/CriOS/.test(navigator.userAgent)&&t(4),s=!0)}i.on("fn-start",function(){s&&(c+=1)}),i.on("fn-err",function(t,e,r){s&&(this.thrown=!0,n(r))}),i.on("fn-end",function(){s&&!this.thrown&&c>0&&(c-=1)}),i.on("internal-error",function(t){r("ierr",[t,(new Date).getTime(),!0])})},{1:9,2:8,3:6,4:10,5:3,6:23,ee:"QJf3ax",handle:"D5DuLP",loader:"G9z0Bl"}],5:[function(t){function e(){}if(window.performance&&window.performance.timing&&window.performance.getEntriesByType){var n=t("ee"),r=t("handle"),o=t(1),i=t(2);t("loader").features.stn=!0,t(3),n.on("fn-start",function(t){var e=t[0];e instanceof Event&&(this.bstStart=Date.now())}),n.on("fn-end",function(t,e){var n=t[0];n instanceof Event&&r("bst",[n,e,this.bstStart,Date.now()])}),o.on("fn-start",function(t,e,n){this.bstStart=Date.now(),this.bstType=n}),o.on("fn-end",function(t,e){r("bstTimer",[e,this.bstStart,Date.now(),this.bstType])}),i.on("fn-start",function(){this.bstStart=Date.now()}),i.on("fn-end",function(t,e){r("bstTimer",[e,this.bstStart,Date.now(),"requestAnimationFrame"])}),n.on("pushState-start",function(){this.time=Date.now(),this.startPath=location.pathname+location.hash}),n.on("pushState-end",function(){r("bstHist",[location.pathname+location.hash,this.startPath,this.time])}),"addEventListener"in window.performance&&(window.performance.addEventListener("webkitresourcetimingbufferfull",function(){r("bstResource",[window.performance.getEntriesByType("resource")]),window.performance.webkitClearResourceTimings()},!1),window.performance.addEventListener("resourcetimingbufferfull",function(){r("bstResource",[window.performance.getEntriesByType("resource")]),window.performance.clearResourceTimings()},!1)),document.addEventListener("scroll",e,!1),document.addEventListener("keypress",e,!1),document.addEventListener("click",e,!1)}},{1:9,2:8,3:7,ee:"QJf3ax",handle:"D5DuLP",loader:"G9z0Bl"}],6:[function(t,e){function n(t){i.inPlace(t,["addEventListener","removeEventListener"],"-",r)}function r(t){return t[1]}var o=(t(1),t("ee").create()),i=t(2)(o),a=t("gos");if(e.exports=o,n(window),"getPrototypeOf"in Object){for(var s=document;s&&!s.hasOwnProperty("addEventListener");)s=Object.getPrototypeOf(s);s&&n(s);for(var c=XMLHttpRequest.prototype;c&&!c.hasOwnProperty("addEventListener");)c=Object.getPrototypeOf(c);c&&n(c)}else XMLHttpRequest.prototype.hasOwnProperty("addEventListener")&&n(XMLHttpRequest.prototype);o.on("addEventListener-start",function(t){if(t[1]){var e=t[1];"function"==typeof e?this.wrapped=t[1]=a(e,"nr@wrapped",function(){return i(e,"fn-",null,e.name||"anonymous")}):"function"==typeof e.handleEvent&&i.inPlace(e,["handleEvent"],"fn-")}}),o.on("removeEventListener-start",function(t){var e=this.wrapped;e&&(t[1]=e)})},{1:23,2:24,ee:"QJf3ax",gos:"7eSDFh"}],7:[function(t,e){var n=(t(2),t("ee").create()),r=t(1)(n);e.exports=n,r.inPlace(window.history,["pushState"],"-")},{1:24,2:23,ee:"QJf3ax"}],8:[function(t,e){var n=(t(2),t("ee").create()),r=t(1)(n);e.exports=n,r.inPlace(window,["requestAnimationFrame","mozRequestAnimationFrame","webkitRequestAnimationFrame","msRequestAnimationFrame"],"raf-"),n.on("raf-start",function(t){t[0]=r(t[0],"fn-")})},{1:24,2:23,ee:"QJf3ax"}],9:[function(t,e){function n(t,e,n){t[0]=o(t[0],"fn-",null,n)}var r=(t(2),t("ee").create()),o=t(1)(r);e.exports=r,o.inPlace(window,["setTimeout","setInterval","setImmediate"],"setTimer-"),r.on("setTimer-start",n)},{1:24,2:23,ee:"QJf3ax"}],10:[function(t,e){function n(){f.inPlace(this,p,"fn-")}function r(t,e){f.inPlace(e,["onreadystatechange"],"fn-")}function o(t,e){return e}function i(t,e){for(var n in t)e[n]=t[n];return e}var a=t("ee").create(),s=t(1),c=t(2),f=c(a),u=c(s),d=window.XMLHttpRequest,p=["onload","onerror","onabort","onloadstart","onloadend","onprogress","ontimeout"];e.exports=a,window.XMLHttpRequest=function(t){var e=new d(t);try{a.emit("new-xhr",[],e),u.inPlace(e,["addEventListener","removeEventListener"],"-",o),e.addEventListener("readystatechange",n,!1)}catch(r){try{a.emit("internal-error",[r])}catch(i){}}return e},i(d,XMLHttpRequest),XMLHttpRequest.prototype=d.prototype,f.inPlace(XMLHttpRequest.prototype,["open","send"],"-xhr-",o),a.on("send-xhr-start",r),a.on("open-xhr-start",r)},{1:6,2:24,ee:"QJf3ax"}],11:[function(t){function e(t){var e=this.params,r=this.metrics;if(!this.ended){this.ended=!0;for(var i=0;c>i;i++)t.removeEventListener(s[i],this.listener,!1);if(!e.aborted){if(r.duration=(new Date).getTime()-this.startTime,4===t.readyState){e.status=t.status;var a=t.responseType,f="arraybuffer"===a||"blob"===a||"json"===a?t.response:t.responseText,u=n(f);if(u&&(r.rxSize=u),this.sameOrigin){var d=t.getResponseHeader("X-NewRelic-App-Data");d&&(e.cat=d.split(", ").pop())}}else e.status=0;r.cbTime=this.cbTime,o("xhr",[e,r,this.startTime])}}}function n(t){if("string"==typeof t&&t.length)return t.length;if("object"!=typeof t)return void 0;if("undefined"!=typeof ArrayBuffer&&t instanceof ArrayBuffer&&t.byteLength)return t.byteLength;if("undefined"!=typeof Blob&&t instanceof Blob&&t.size)return t.size;if("undefined"!=typeof FormData&&t instanceof FormData)return void 0;try{return JSON.stringify(t).length}catch(e){return void 0}}function r(t,e){var n=i(e),r=t.params;r.host=n.hostname+":"+n.port,r.pathname=n.pathname,t.sameOrigin=n.sameOrigin}if(window.XMLHttpRequest&&XMLHttpRequest.prototype&&XMLHttpRequest.prototype.addEventListener&&!/CriOS/.test(navigator.userAgent)){t("loader").features.xhr=!0;var o=t("handle"),i=t(2),a=t("ee"),s=["load","error","abort","timeout"],c=s.length,f=t(1);t(4),t(3),a.on("new-xhr",function(){this.totalCbs=0,this.called=0,this.cbTime=0,this.end=e,this.ended=!1,this.xhrGuids={}}),a.on("open-xhr-start",function(t){this.params={method:t[0]},r(this,t[1]),this.metrics={}}),a.on("open-xhr-end",function(t,e){"loader_config"in NREUM&&"xpid"in NREUM.loader_config&&this.sameOrigin&&e.setRequestHeader("X-NewRelic-ID",NREUM.loader_config.xpid)}),a.on("send-xhr-start",function(t,e){var r=this.metrics,o=t[0],i=this;if(r&&o){var f=n(o);f&&(r.txSize=f)}this.startTime=(new Date).getTime(),this.listener=function(t){try{"abort"===t.type&&(i.params.aborted=!0),("load"!==t.type||i.called===i.totalCbs&&(i.onloadCalled||"function"!=typeof e.onload))&&i.end(e)}catch(n){try{a.emit("internal-error",[n])}catch(r){}}};for(var u=0;c>u;u++)e.addEventListener(s[u],this.listener,!1)}),a.on("xhr-cb-time",function(t,e,n){this.cbTime+=t,e?this.onloadCalled=!0:this.called+=1,this.called!==this.totalCbs||!this.onloadCalled&&"function"==typeof n.onload||this.end(n)}),a.on("xhr-load-added",function(t,e){var n=""+f(t)+!!e;this.xhrGuids&&!this.xhrGuids[n]&&(this.xhrGuids[n]=!0,this.totalCbs+=1)}),a.on("xhr-load-removed",function(t,e){var n=""+f(t)+!!e;this.xhrGuids&&this.xhrGuids[n]&&(delete this.xhrGuids[n],this.totalCbs-=1)}),a.on("addEventListener-end",function(t,e){e instanceof XMLHttpRequest&&"load"===t[0]&&a.emit("xhr-load-added",[t[1],t[2]],e)}),a.on("removeEventListener-end",function(t,e){e instanceof XMLHttpRequest&&"load"===t[0]&&a.emit("xhr-load-removed",[t[1],t[2]],e)}),a.on("fn-start",function(t,e,n){e instanceof XMLHttpRequest&&("onload"===n&&(this.onload=!0),("load"===(t[0]&&t[0].type)||this.onload)&&(this.xhrCbStart=(new Date).getTime()))}),a.on("fn-end",function(t,e){this.xhrCbStart&&a.emit("xhr-cb-time",[(new Date).getTime()-this.xhrCbStart,this.onload,e],e)})}},{1:"XL7HBI",2:12,3:10,4:6,ee:"QJf3ax",handle:"D5DuLP",loader:"G9z0Bl"}],12:[function(t,e){e.exports=function(t){var e=document.createElement("a"),n=window.location,r={};e.href=t,r.port=e.port;var o=e.href.split("://");return!r.port&&o[1]&&(r.port=o[1].split("/")[0].split("@").pop().split(":")[1]),r.port&&"0"!==r.port||(r.port="https"===o[0]?"443":"80"),r.hostname=e.hostname||n.hostname,r.pathname=e.pathname,r.protocol=o[0],"/"!==r.pathname.charAt(0)&&(r.pathname="/"+r.pathname),r.sameOrigin=!e.hostname||e.hostname===document.domain&&e.port===n.port&&e.protocol===n.protocol,r}},{}],13:[function(t,e){function n(t){return function(){r(t,[(new Date).getTime()].concat(i(arguments)))}}var r=t("handle"),o=t(1),i=t(2);"undefined"==typeof window.newrelic&&(newrelic=window.NREUM);var a=["setPageViewName","addPageAction","setCustomAttribute","finished","addToTrace","inlineHit","noticeError"];o(a,function(t,e){window.NREUM[e]=n("api-"+e)}),e.exports=window.NREUM},{1:22,2:23,handle:"D5DuLP"}],"7eSDFh":[function(t,e){function n(t,e,n){if(r.call(t,e))return t[e];var o=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,e,{value:o,writable:!0,enumerable:!1}),o}catch(i){}return t[e]=o,o}var r=Object.prototype.hasOwnProperty;e.exports=n},{}],gos:[function(t,e){e.exports=t("7eSDFh")},{}],handle:[function(t,e){e.exports=t("D5DuLP")},{}],D5DuLP:[function(t,e){function n(t,e,n){return r.listeners(t).length?r.emit(t,e,n):(o[t]||(o[t]=[]),void o[t].push(e))}var r=t("ee").create(),o={};e.exports=n,n.ee=r,r.q=o},{ee:"QJf3ax"}],id:[function(t,e){e.exports=t("XL7HBI")},{}],XL7HBI:[function(t,e){function n(t){var e=typeof t;return!t||"object"!==e&&"function"!==e?-1:t===window?0:i(t,o,function(){return r++})}var r=1,o="nr@id",i=t("gos");e.exports=n},{gos:"7eSDFh"}],G9z0Bl:[function(t,e){function n(){var t=p.info=NREUM.info,e=f.getElementsByTagName("script")[0];if(t&&t.licenseKey&&t.applicationID&&e){s(d,function(e,n){e in t||(t[e]=n)});var n="https"===u.split(":")[0]||t.sslForHttp;p.proto=n?"https://":"http://",a("mark",["onload",i()]);var r=f.createElement("script");r.src=p.proto+t.agent,e.parentNode.insertBefore(r,e)}}function r(){"complete"===f.readyState&&o()}function o(){a("mark",["domContent",i()])}function i(){return(new Date).getTime()}var a=t("handle"),s=t(1),c=(t(2),window),f=c.document,u=(""+location).split("?")[0],d={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-632.min.js"},p=e.exports={offset:i(),origin:u,features:{}};f.addEventListener?(f.addEventListener("DOMContentLoaded",o,!1),c.addEventListener("load",n,!1)):(f.attachEvent("onreadystatechange",r),c.attachEvent("onload",n)),a("mark",["firstbyte",i()])},{1:22,2:13,handle:"D5DuLP"}],loader:[function(t,e){e.exports=t("G9z0Bl")},{}],22:[function(t,e){function n(t,e){var n=[],o="",i=0;for(o in t)r.call(t,o)&&(n[i]=e(o,t[o]),i+=1);return n}var r=Object.prototype.hasOwnProperty;e.exports=n},{}],23:[function(t,e){function n(t,e,n){e||(e=0),"undefined"==typeof n&&(n=t?t.length:0);for(var r=-1,o=n-e||0,i=Array(0>o?0:o);++r<o;)i[r]=t[e+r];return i}e.exports=n},{}],24:[function(t,e){function n(t){return!(t&&"function"==typeof t&&t.apply&&!t[i])}var r=t("ee"),o=t(1),i="nr@wrapper",a=Object.prototype.hasOwnProperty;e.exports=function(t){function e(t,e,r,a){function nrWrapper(){var n,i,s,f;try{i=this,n=o(arguments),s=r&&r(n,i)||{}}catch(d){u([d,"",[n,i,a],s])}c(e+"start",[n,i,a],s);try{return f=t.apply(i,n)}catch(p){throw c(e+"err",[n,i,p],s),p}finally{c(e+"end",[n,i,f],s)}}return n(t)?t:(e||(e=""),nrWrapper[i]=!0,f(t,nrWrapper),nrWrapper)}function s(t,r,o,i){o||(o="");var a,s,c,f="-"===o.charAt(0);for(c=0;c<r.length;c++)s=r[c],a=t[s],n(a)||(t[s]=e(a,f?s+o:o,i,s))}function c(e,n,r){try{t.emit(e,n,r)}catch(o){u([o,e,n,r])}}function f(t,e){if(Object.defineProperty&&Object.keys)try{var n=Object.keys(t);return n.forEach(function(n){Object.defineProperty(e,n,{get:function(){return t[n]},set:function(e){return t[n]=e,e}})}),e}catch(r){u([r])}for(var o in t)a.call(t,o)&&(e[o]=t[o]);return e}function u(e){try{t.emit("internal-error",e)}catch(n){}}return t||(t=r),e.inPlace=s,e.flag=i,e}},{1:23,ee:"QJf3ax"}]},{},["G9z0Bl",4,11,5]);
+;NREUM.info={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",licenseKey:"ce48477ed0",applicationID:"7067223",sa:1,agent:"js-agent.newrelic.com/nr-632.min.js"}
+</script>
+    
+    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-56787812-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link href='http://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
+
+
+<link type="text/css" rel="stylesheet" href="/css/styles.css"/>
+
+
+
+  </head>
+<body>
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="http://localhost:1313/">Aaron Taylor</a>
+    </div>
+    <div id="navbar" class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="/blog">Blog</a></li>
+        
+        <li><a href="/about">About</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <div id="blog-post" class="">
+                    <h1>Facilitating Idiomatic Swift with Objective-C<br> <small>If you are hitting roadblocks in trying to communicate with Core Foundation and C APIs directly from Swift, just wrap them in a friendly Objective-C class that provides an simple API for the rest of your application to use.</small></h1>
+                    <hr>
+                    
+
+<h5 id="tl-dr-if-you-are-hitting-roadblocks-in-trying-to-communicate-with-core-foundation-and-c-apis-directly-from-swift-just-wrap-them-in-a-friendly-objective-c-class-that-provides-an-simple-api-for-the-rest-of-your-application-to-use:ed2493891a91270524d133e14b0956ee">tl;dr If you are hitting roadblocks in trying to communicate with Core Foundation and C APIs directly from Swift, just wrap them in a friendly Objective-C class that provides an simple API for the rest of your application to use.</h5>
+
+<p><img style="width:50%;position:relative;left:25%;" src="/images/blog/swift_logo.png" alt="Meta Cloud"></p>
+
+<p>At Meta, most of the work that has gone into our client applications thus far facilitates keeping our user’s files in sync with our cloud system so that they can be easily searched and accessed. When we began work on the client application for Mac OS X a few months ago, there were two major decisions that had to be made. The first was how to organize the application so that a resilient background process could listen for file system changes and keep everything up to date in the cloud. I’ll likely be discussing that in a future post. The second decision was what language to base the project in, which I will be discussing here.</p>
+
+<p>Since I was to be the primary developer of this application for the short term, this was partly a personal choice. While most of my experience in Apple&rsquo;s world to date had been in writing Objective-C code, I had experimented with Swift and was excited to try it out in a production application. The were a few features in particular that I was attracted to in Swift.</p>
+
+<p>To start with, Swift&rsquo;s concision was especially enticing. The ability to express oneself quickly is a desirable feature in any language, and fewer lines of code written means fewer lines of code to maintain. Another area of interest was the type safety, which Swift makes available through its data structures. Our system is largely event-based, with relatively complex data types passing information around about the state of a user&rsquo;s files. In the back end, our use of structs provided by <a href="http://golang.org">Go</a> provides strong type safety in handling incoming data. Being able to work with similar guarantees on the client side is highly desirable. A third aspect that was appealing to me personally was the functional aspects of Swift. I enjoy programming in a functional style and Swift&rsquo;s built in functionality for <code>map</code>, <code>reduce</code>, <code>join</code>, and the like were a great stimulus to try out the language further.</p>
+
+<p>Once the decision was made to use Swift as the primary language, development of our Mac application moved forward rapidly. Once the various components of the application were in place and structured, I began work on the meat of the application: handling changes to a user&rsquo;s files. To interface with the file system on the level we required, much of the interaction occurs within the Core Foundation frameworks and in pure C code. As we tried to interface with these frameworks in Swift, a variety of issues came up.</p>
+
+<h3 id="interfacing-with-uttype:ed2493891a91270524d133e14b0956ee">Interfacing with UTType</h3>
+
+<p>Critical to analyzing a file&rsquo;s content and displaying a meaningful description of a file to the user is knowing what kind of file you are dealing with. Cocoa&rsquo;s <a href="https://developer.apple.com/library/mac/documentation/MobileCoreServices/Reference/UTTypeRef/">UTType</a> functionality provides us with the ability to extrapolate a file&rsquo;s MIME type for use in our cloud services.</p>
+
+<h4 id="swift:ed2493891a91270524d133e14b0956ee">Swift</h4>
+
+<p>In Swift, my best attempt at interfacing with UTType is as follows in the code snippet below. There are two calls into the <code>UTType</code> framework. The first requires a parameter of type <code>CFStringRef</code>, which is easily created with a cast which utilized toll-free bridging behinds the scenes. The return value of this function is <code>Unmanaged&lt;CFString&gt;!</code>, indicating that is an unannotated method where the memory management must be manually handled in Swift. The <code>takeRetainedValue()</code> function is used because the value returned by this function as already been retained and needs to be released when the current scope is exited, thus removing the <code>Unmanaged&lt;&gt;</code> wrapper from the inner type. Additionally, the failure case I have here is rather convoluted because it occurs when the <code>cfMimeType</code> fails to bridge to a string, rather than explicitly from the return of the function call.</p>
+
+<pre><code class="language-swift">// this code crashes at runtime
+public class func mimeTypeForFile(path: String) -&gt; String {
+    let ext = path.pathExtension as CFStringRef
+    let UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, ext, nil).takeRetainedValue()
+    
+    let cfMimeType = UTTypeCopyPreferredTagWithClass(UTI, kUTTagClassMIMEType).takeRetainedValue()
+    if let mimeType = cfMimeType as? String {
+        return mimeType
+    }
+    return &quot;application/octet-stream&quot;
+}
+</code></pre>
+
+<p>Once I got this code compiling, I wrote a short unit test. Unfortunately when this code is run the following error occurs, a dreaded <code>EXC_BAD_INSTRUCTION</code> runtime error. It is certainly possible that this code could be further massaged to get this example working (please let me know if you are able to), but after a good half hour or so I wasn&rsquo;t able to find a solution.</p>
+
+<p><img style="width:100%;position:relative;" src="https://meta.sc/blog/images/snippets/swift_uttype.png" alt="Swift UTType interfacing" title="Optional title" /></p>
+
+<h4 id="objective-c:ed2493891a91270524d133e14b0956ee">Objective-C</h4>
+
+<p>Looking at the same code in Objective-C, several things are more desirable. Firstly, this code works; usually a desirable attribute in production code. No bad instructions errors here. Secondly, coming from a background of Objective-C, what is happening here is clearer than in the Swift code. Rather than dealing with wrappers on Core Foundation types meant to insulate Swift from pointers, you are dealing with the implementation directly and the underlying interactions are clearer. Since most developers writing Swift are coming from an Objective-C background, it should be explicitly clear what this code is doing in regard to memory management and error handling.</p>
+
+<pre><code class="language-objectivec">- (NSString*) mimeTypeForFile:(NSString*) path {
+    CFStringRef ext = (__bridge CFStringRef)[path pathExtension];
+    CFStringRef UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, ext, NULL);
+    CFStringRef mimeType = UTTypeCopyPreferredTagWithClass(UTI, kUTTagClassMIMEType);
+    CFRelease(UTI);
+    if (!mimeType) {
+        return @&quot;application/octet-stream&quot;;
+    }
+    return CFBridgingRelease(mimeType);
+}
+</code></pre>
+
+<h3 id="file-system-events:ed2493891a91270524d133e14b0956ee">File System Events</h3>
+
+<p>Another area where we ran into issues was in our use of the <a href="https://developer.apple.com/library/mac/documentation/Darwin/Conceptual/FSEvents_ProgGuide/Introduction/Introduction.html">File System Events API</a>, which provides a stream giving callbacks to your application when anything changes on the file system within a specified scope.</p>
+
+<p>What follows is my best attempt to create File System Event stream in pure Swift. There is a lot of syntactic baggage surrounding pointer handling and Core Foundation types, but theoretically all that should work just fine. The blocking issue is that a <code>CFuntionPointer</code>, Swift&rsquo;s type which is analogous to a normal function pointer in pure C code, cannot be created from either a Swift function or a closure. This is a limitation of the Swift language (until the recent 2.0 release, more on that later). The following code fails to compile because of this limitation.</p>
+
+<pre><code class="language-swift">// this code does not compile
+func testCreateSimpleSwiftListener() {
+    let cfDirs = [NSHomeDirectory()] as CFArray
+    let context = nil as UnsafeMutablePointer&lt;FSEventStreamContext&gt;
+    let latency = 3.0 as CFAbsoluteTime
+    let flags = kFSEventStreamCreateFlagFileEvents | kFSEventStreamCreateFlagWatchRoot
+    
+    let callback: @objc_block (
+    ConstFSEventStreamRef,
+    UnsafeMutablePointer&lt;Void&gt;,
+    Int,
+    UnsafeMutablePointer&lt;Void&gt;,
+    UnsafePointer&lt;FSEventStreamEventFlags&gt;,
+    UnsafePointer&lt;FSEventStreamEventId&gt;) -&gt; Void = {
+        (streamRef, clientCallBackInfo, numEvents, eventPaths, eventFlags, eventIds) -&gt; Void in
+        NSLog(&quot;Received %i paths&quot;, numEvents)
+        // handle file event
+    } as CFunctionPointer
+    
+    let stream = FSEventStreamCreate(
+        kCFAllocatorDefault,
+        callback as FSEventStreamCallback,
+        context,
+        cfDirs,
+        kFSEventStreamEventIdSinceNow,
+        latency,
+        flags
+    )
+    FSEventStreamScheduleWithRunLoop(stream, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode)
+    FSEventStreamStart(stream)
+}
+</code></pre>
+
+<p>Here is the code with the compiler errors shown.</p>
+
+<p><img style="width:100%;position:relative;" src="https://meta.sc/blog/images/snippets/swift_fsevents_func.png" alt="Swift FSEvents interfacing" /></p>
+
+<p>Again, with some further massaging this <a href="http://stackoverflow.com/questions/25514176/using-swift-cfunctionpointer-to-pass-a-callback-to-coremidi-api#answer-29375116">might</a> or <a href="http://dev.eltima.com/post/97718928834/interacting-with-c-pointers-in-swift-part-3">might not</a> be possible by delving further into the Objective-C runtime, but in doing so we yet again lose out on the most of the benefits of working in Swift at all. Even with this function pointer issue fixed, the <code>UnsafeMutablePointer&lt;Type&gt;</code> and <code>UnsafePointer&lt;Type&gt;</code> wrappers are uncomfortable to work with and a jarring change from the kind of Swift code that one can enjoy writing.</p>
+
+<h3 id="reclaiming-the-benefits-of-swift:ed2493891a91270524d133e14b0956ee">Reclaiming the benefits of Swift</h3>
+
+<p>In the previous two examples, nearly all of the reasons that I chose Swift for this project in the first place have been eroded to some degree. With the wrappers around low level objects, much of the concision disappeared. Since we are using Core Foundation types, type safety within data structures has withered. Lastly, higher level language features can only be applied after these low level types have been sufficiently dealt with. It basically feels like writing C code with more verbose and unfamiliar syntax.</p>
+
+<p>Ideally, when we are writing Swift we can focus on the benefits of the language, not how it interfaces with the very code it was meant to replace. The solution we ended up using here is to wrap interactions with Core Foundation and C APIs with simple Objective-C wrapper classes that provide a clean API for use by your Swift code. For us, this consisted primarily of two basic classes, <code>FileSystemListener</code> and <code>FileSystemCrawler</code>. The listener class is a wrapper around code dealing with the aforementioned <a href="https://developer.apple.com/library/mac/documentation/Darwin/Conceptual/FSEvents_ProgGuide/Introduction/Introduction.html">File System Events API</a>, and the crawler wraps low level C code with interacts with the file system as efficiently as possible, enabling introspectable breadth-first crawls that can handle concurrent modifications to the file system.</p>
+
+<p>By providing these interfaces, the rest of our Swift code can interact with a purpose built API that dovetails nicely into our business logic, written in Swift, feeding changes to our events streams in the cloud. Additionally, it helps to reinforce good design principles in the realm of code modularity and separation of concerns, making your application more maintainable and testable moving forward.</p>
+
+<h3 id="objective-c-and-swift:ed2493891a91270524d133e14b0956ee">Objective-C and Swift</h3>
+
+<p>Interop between Objective-C and Swift at a higher level is a much friendlier affair, and most developers working in Swift probably have some experience in this area. Still, at the risk of paraphrasing the documentation, there were a few areas which were of particular interest to us that I would like to touch on. If this is an area where you are working in-depth, I would recommend that you to consult Apple&rsquo;s documentation on <a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216-CH2-XID_0">Using Swift with Cocoa and Objective-C</a> directly for a much more thorough treatment of the topic.</p>
+
+<h4 id="bridging:ed2493891a91270524d133e14b0956ee">Bridging</h4>
+
+<p>The basis for interop between Objective-C and Swift is bridging between the two languages. Calling into Objective-C from Swift requires a bridging header to be inserted into your project, which Xcode will usually prompt you for, as shown below, when an Objective-C file is added to a Swift project. This file is linked to your build settings in the <strong>Swift Compiler - Code Generation</strong> section as the <strong>Objective-C Bridging Header</strong>. This header file contains import statements for the header files of Objective-C code that you wish to interact with. The Objective-C file that prompted its creation will be automatically added, and all subsequent files must be added manually.</p>
+
+<div align="center"><img src="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/BuildingCocoaApps/Art/bridgingheader_2x.png" style="width:100%;position:relative;"/></div>
+
+<h4 id="syntactic-translation:ed2493891a91270524d133e14b0956ee">Syntactic Translation</h4>
+
+<p>As <a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/BuildingCocoaApps/InteractingWithObjective-CAPIs.html#//apple_ref/doc/uid/TP40014216-CH4-XID_25">documented</a>, the Swift compiler performs translations of Objective-C syntax into Swift so that initializers, methods, and function calls can be performed natively from Swift code. Most of these conversions are fairly intuitive, and you have probably worked with some examples of these translations. The below example is a simplified version of a delegate of our <code>FileSystemListener</code> class that wraps the FSEvents library using Objective-C.</p>
+
+<pre><code class="language-objc">@protocol FileSystemListenerDelegate &lt;NSObject&gt;
+-(void)fileCreateEvent:(FSEventStreamEventId)eventID atPath:(NSString*)path withFlags:(FSEventStreamEventFlags)flags;
+-(void)fileModifyEvent:(FSEventStreamEventId)eventID atPath:(NSString*)path withFlags:(FSEventStreamEventFlags)flags;
+-(void)fileRemoveEvent:(FSEventStreamEventId)eventID atPath:(NSString*)path withFlags:(FSEventStreamEventFlags)flags
+@end
+</code></pre>
+
+<p>This stub of a Swift class demonstrates how the syntax translates between the two languages. Perhaps the translations are a bit more verbose than they could be, but it is still perfectly understandable and functional. And of course, Xcode&rsquo;s auto complete functionality will fill out the translated function as you type.</p>
+
+<pre><code class="language-swift">class FileHandler: FileSystemListenerDelegate {
+    func fileCreateEvent(eventID: FSEventStreamEventId, atPath path: String!, withFlags flags: FSEventStreamEventFlags) {}
+    func fileModifyEvent(eventID: FSEventStreamEventId, atPath path: String!, withFlags flags: FSEventStreamEventFlags) {}
+    func fileRemoveEvent(eventID: FSEventStreamEventId, atPath path: String!, withFlags flags: FSEventStreamEventFlags) {}
+}
+</code></pre>
+
+<h5 id="initializer-behavior:ed2493891a91270524d133e14b0956ee">Initializer behavior</h5>
+
+<p>One behavior to be cognizant of in this translation is the handling of Optional types from potentially failable Objective-C initializers. Since Objective-C does not have a concept of Optionals, the default translation is auto-unwrapped Types, indicated with a bang at the end of the type, e.g. <code>Type!</code>. Some APIs are annotated to indicate whether or not the initialization can fail, either eschewing an Optional wrapper of prompting the use of a normal Optional. For those that are not, the way auto-unwrapped Optionals work is that when accessed, the underlying value is implicitly unwrapped, causing a panic if the underlying value happens to be nil. If you are coming from an Objective-C background where we can happily send messages to <code>nil</code> objects and move right along, this is definitely something to watch out for. As usual, this behavior is <a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/BuildingCocoaApps/InteractingWithObjective-CAPIs.html#//apple_ref/doc/uid/TP40014216-CH4-XID_27">well documented</a> within Apple&rsquo;s treatment of the topic.</p>
+
+<h4 id="data-types:ed2493891a91270524d133e14b0956ee">Data Types</h4>
+
+<p>One area of concern in designing an interface between Objective-C and C code is the loss of type information for data structures. As I mentioned previously, one of the most attractive features in Swift initially was preserving type information, as opposed to untyped <code>NSArray</code> and <code>NSDictionary</code> objects. In the current release of Swift, these are still issues, but with a bit of care they can be handled gracefully.</p>
+
+<p>The following code snippet shows a simple example of optionally casting a <code>NSDictionary</code> into a typed Swift dictionary. The <a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6-XID_47">collection classes documentation</a> has further examples.</p>
+
+<pre><code class="language-swift">let d = NSDictionary(object: &quot;value&quot;, forKey: &quot;key&quot;)
+if let data = d as? [String: String] {
+    print(&quot;data: \(data)&quot;)
+}
+</code></pre>
+
+<p>A very simple example of bridging between the <code>NSString</code> and <code>String</code> types by casting. When working with strings, methods for both <code>NSString</code> and the builtin Swift <code>String</code> types are available. Yet again, you can checkout the <a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6-XID_44">strings documentation</a> for further examples.</p>
+
+<pre><code class="language-swift">let n = &quot;my string&quot; as NSString
+let s = n as String
+</code></pre>
+
+<h4 id="cocoapods:ed2493891a91270524d133e14b0956ee">Cocoapods</h4>
+
+<p>We use Cocoapods for third party dependency management in the Meta client application. When experimenting with pods that are written in Swift, we came across an interesting aspect of the tool that I had previously been unaware of. Cocoapods has historically used static libraries, because while Mac has supported dynamic libraries for some time now, iOS has only supported them since the release of Swift. Static libraries work well for Objective-C, but as described by a <a href="http://blog.cocoapods.org/CocoaPods-0.36/">blog post</a> on the release of Cocoapods 0.36, dynamic libraries are a requirement for Cocoapods written in Swift. The use of dynamic libraries is enabled by a <code>use_frameworks!</code> line in your <code>Podfile</code> specifying that your pods should be dynamically linked. If you have further interest in this topic, their <a href="http://blog.cocoapods.org/Pod-Authors-Guide-to-CocoaPods-Frameworks/">previous blog post</a> further illustrates the distinction.</p>
+
+<h3 id="a-lingering-issue:ed2493891a91270524d133e14b0956ee">A Lingering Issue</h3>
+
+<p>For the most part, when you move up out of interactions with Core Foundation and C code, interop between Objective-C and Swift just works. However, somewhere along the line we introduced a crash of the Swift compiler when building for release with optimizations, which is fixed by turning off the compiler optimizations, setting <strong>Optimization Level</strong> to <strong>-Onone</strong> in the <strong>Swift Compiler - Code Generation</strong> section. When I gave this talk at <a href="http://www.meetup.com/Boston-Swift/">Boston Swift</a>, an audience member brought up a <a href="https://twitter.com/search?q=“optimize.sil.never”&amp;src=typd">twitter discussion</a> pointing to an annotation which may be useful in tracking down this bug. I&rsquo;ll be diving into this in the coming weeks as we approach our closed beta launch, and if a solution is found I&rsquo;ll post an update. Compiler optimizations can make an orders of magnitude difference in the performance of a program, so turning them off completely is quite undesirable.</p>
+
+<!-- ![Swift compiler crash](https://meta.sc/images/blog/snippets/swift_compiler_error.png) -->
+
+<h3 id="conclusions:ed2493891a91270524d133e14b0956ee">Conclusions</h3>
+
+<p>When working with a new language, the last thing you want to do is try to code in the style of another language in a way that is non idiomatic. As a general rule of thumb, approaching a new language that way almost always results in less performant and less elegant code. In Swift, a lot of effort has been put in to ensure that developers can continue to interact with the existing C-based ecosystem surrounding Apple&rsquo;s developer tools. While these tools are very useful for certain situations, they are far from a panacea where everything can be done in Swift. Choose your tools for the problem at hand, and when it comes to Mac and iOS development, that can mean thoughtful separation of concerns that allows you to have Swift and Objective-C existing within a simple application in a way that plays to the strengths of each language.</p>
+
+<p>===</p>
+
+<h3 id="updates-after-wwdc-2015:ed2493891a91270524d133e14b0956ee">Updates after WWDC 2015</h3>
+
+<p>The development work underlying this blog post all took place before the 2015 WWDC conference last week. Two changes in particular help with some of the issues that are described above and I am very excited about trying them out within our application. With our preparations for the beta launch I have not yet had time to do so, but I&rsquo;ll give my first impressions about the benefits they present.</p>
+
+<h4 id="objective-c-generics:ed2493891a91270524d133e14b0956ee">Objective-C Generics</h4>
+
+<p>One of the ongoing concerns I had with using Objective-C as opposed to Swift was the lack of type safety in data types. This has always been the status quo with Objective-C, but with the latest release of the Xcode 7 beta, support has been added for Objective-C generics, which will translate into typed Swift data structures. This is an exciting new feature and a great indicator that Apple is still putting significant effort into the development of Objective-C as well as Swift.</p>
+
+<blockquote>
+<p>Lightweight generics allow you to specify type information for collection classes like NSArray, NSSet, and NSDictionary. The type information improves Swift access when you bridge from Objective-C and simplifies the code you have to write. (6294649)</p>
+</blockquote>
+
+<h4 id="cfunctionpointer-support:ed2493891a91270524d133e14b0956ee">CFunctionPointer support</h4>
+
+<p>The central issue that blocked our efforts to use pure Swift was a lack of support for the <code>CFunctionPointer</code> type. With the newest Xcode 7 beta release, support for function pointers has been added.</p>
+
+<blockquote>
+<p>Native support for C function pointers: C functions that take function pointer arguments can be called using closures or global functions, with the restriction that the closure must not capture any of its local context. (16339559)</p>
+</blockquote>
+
+<p>This is an exciting change that would theoretically enable us to port the File System Events interactions to Swift. In combination with generics, many of my primary concerns have been alleviated. However, I think that the benefits of creating wrapper classes around these lower level APIs still hold. By abstracting away the complexity of the underlying functionality and providing a higher level API specific to your application, your code is more modular and more easily understandable. As Apple seeks to fortify Swift&rsquo;s abilities, many of the issues I have run into will be undoubtedly be fixed. While the choice of language may fall more to the developer&rsquo;s preference in the future, the principles of modularity will always apply.</p>
+
+<p>As we grow our team here at Meta, we want to make it as easy as possible for our newest team members to get up to speed and shipping code to our customers. If you&rsquo;re interest in helping us simplify the complex and unsolved problem of finding files, reach out to us at <a href="mailto:careers@meta.sc">careers@meta.sc</a></p>
+
+<h2 id="slides:ed2493891a91270524d133e14b0956ee">Slides</h2>
+
+<p>This blog post is based on a talk I gave for <a href="http://www.meetup.com/Boston-Swift/">Boston Swift</a>. The slides are up on <a href="http://www.slideshare.net/AaronTaylor20/swift-objc-49480894">Slideshare</a>.</p>
+
+<p><center><iframe src="https://www.slideshare.net/slideshow/embed_code/key/Bjr9W8CdCKOURA" width="476" height="400" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe></center>
+<p></p></p>
+
+<h2 id="further-reading:ed2493891a91270524d133e14b0956ee">Further Reading</h2>
+
+<ul>
+<li><a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html">Using Swift with Cocoa and Objective-C: Working with Cocoa Data Types</a></li>
+<li><a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/BuildingCocoaApps/InteractingWithCAPIs.html">Using Swift with Cocoa and Objective-C: Interacting with C APIs</a></li>
+<li><a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html">Using Swift with Cocoa and Objective-C: Swift and Objective-C in the Same Project</a></li>
+<li><a href="https://developer.apple.com/swift/blog/?id=6">Interacting with C Pointers - Swift Blog - Apple Developer</a></li>
+<li><a href="http://dev.eltima.com/post/93497713759/interacting-with-c-pointers-in-swift-part-2">Mac Developers Blog - Interacting with C Pointers in Swift. Part 2</a></li>
+<li><a href="http://www.charlessoft.com/hacks/using_c_function_pointers_in_swift.html">Horrible Coding Hack: Using C Function Pointers in Swift</a></li>
+<li><a href="http://blog.cocoapods.org/CocoaPods-0.36/">CocoaPods 0.36 - Framework and Swift Support</a></li>
+<li><a href="http://blog.cocoapods.org/Pod-Authors-Guide-to-CocoaPods-Frameworks/">Pod Authors Guide to CocoaPods Frameworks</a></li>
+<li><a href="http://adcdownload.apple.com/WWDC_2015/Xcode_7_beta/Xcode_7_beta_Release_Notes.pdf">Xcode 7 beta release notes</a> (requires apple developer account)</li>
+</ul>
+
+                    <br>
+            </div>
+            <div id="disqus_thread"></div>
+<script type="text/javascript">
+     
+    var disqus_shortname = 'kujengatech';
+    
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+        </div>
+
+        
+        <div class="col-md-3">
+            <div id="sidebar" class="panel panel-default">
+    <div class="panel-heading" style="padding: 2px 15px;">
+        <h4>Looking Outward</h4>
+    </div>
+    <div class="panel-body">
+        <div>
+            <ul>
+                <li><a href="https://www.meta.sc" title="Meta" target=newtab>Meta</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4>Other Posts</h4>
+            <ul>
+            
+                <li><a href="https://meta.sc/tech/swiftobjc" title="Facilitating Idiomatic Swift with Objective-C" target=newtab>Facilitating Idiomatic Swift with Objective-C</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            <div class=""> 
+                <h4>June 16, 2015<br>
+                <small>3135 words</small></h4>
+                
+                <hr>
+                <strong>Tags</strong><br>
+                
+            </div>
+        </div>
+    </div>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="col-md-6">
+      <ul class="list-inline">
+        <li>
+          <p class="text-muted">&copy; Aaron Taylor 2015</p>
+        </li>
+        <li>
+          <p></p>
+        </li>
+        <li>
+            <a href="https://linkedin.com/in/ataylor0123" class="btn-social btn-outline" target=newtab><i class="fa fa-fw fa-linkedin"></i></a>
+        </li>
+        <li>
+            <a href="https://github.com/kujenga" class="btn-social btn-outline" target=newtab><i class="fa fa-fw fa-github"></i></a>
+        </li>
+        <li>
+            <a href="https://angel.co/aaron-taylor-1" class="btn-social btn-outline" target=newtab><i class="fa fa-fw fa-angellist"></i></a>
+        </li>
+        <li>
+            <a href="https://twitter.com/ataylor0123" class="btn-social btn-outline" target=newtab><i class="fa fa-fw fa-twitter"></i></a>
+        </li>
+        <li>
+            <a href="https://instagram.com/ataylor0123/" class="btn-social btn-outline" target=newtab><i class="fa fa-fw fa-instagram"></i></a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-6">
+    </div>
+  </div>
+</footer>
+
+</div> 
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+  var jumboHeight = $('.jumbotron').outerHeight();
+  function parallax(){
+      var scrolled = $(window).scrollTop();
+      $('.bg').css('height', (jumboHeight-scrolled) + 'px');
+  }
+
+  $(window).scroll(function(e){
+      parallax();
+  });
+</script>
+
+<script type="text/javascript">
+	
+	$(document).ready(function() {
+	    $('a[href="' + this.location.pathname + '"]').parent().addClass('active');
+	});
+</script>
+<script data-no-instant>document.write('<script src="http://'
+        + (location.host || 'localhost').split(':')[0]
+		+ ':1313/livereload.js?mindelay=10"></'
+        + 'script>')</script></body>
+</html>
