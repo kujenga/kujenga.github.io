@@ -6,8 +6,100 @@
     <description>Recent content on Aaron Taylor</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Jun 2015 22:23:41 -0400</lastBuildDate>
+    <lastBuildDate>Sun, 20 Sep 2015 18:14:20 -0400</lastBuildDate>
     <atom:link href="https://ataylor.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Improvements in Go 1.5</title>
+      <link>https://ataylor.io/blog/go15/</link>
+      <pubDate>Sun, 20 Sep 2015 18:14:20 -0400</pubDate>
+      
+      <guid>https://ataylor.io/blog/go15/</guid>
+      <description>
+
+&lt;p&gt;With the relatively recent release Go 1.5, there are a variety of interesting areas to look at in regards to what&amp;rsquo;s changed with the language. As one would expect based on both Go&amp;rsquo;s philosophy and it&amp;rsquo;s &lt;a href=&#34;http://golang.org/doc/go1compat&#34;&gt;future compatibility&lt;/a&gt; guidelines, not much has changed from a language feature standpoint. Still, there a number of exciting under-the-hood enhancements in the latest release.&lt;/p&gt;
+
+&lt;h3 id=&#34;package-system:3614b4ac0fb81e46a552fe4b0f2199ab&#34;&gt;Package system&lt;/h3&gt;
+
+&lt;p&gt;New functionality has been introduced to the packaging system in two ways. First, support for &lt;a href=&#34;https://docs.google.com/document/d/1e8kOo3r51b2BWtTs_1uADIA5djfXhPT36s6eHVRIvaU/edit&#34;&gt;internal packages&lt;/a&gt; has been brought out of it&amp;rsquo;s experimental phase in Go 1.4 where it was being testing within GOROOT to now apply to packages within the GOPATH. This will allow Go packages to divide their different functions up into more logical components without exposing APIs in unwanted ways. This is a pattern that the &lt;a href=&#34;https://godoc.org/google.golang.org/appengine/internal&#34;&gt;App Engine SDK&lt;/a&gt; uses well, wrapping supporting functionality that is largely auto-generated in internal packages, making the logical code exposed through the API more readable and easier to maintain.&lt;/p&gt;
+
+&lt;p&gt;The second addition to the package system was experimental &lt;a href=&#34;https://docs.google.com/document/d/1Bz5-UB7g2uPBdOx-rw5t9MxJwkfpx90cqG9AFL0JAYo/edit&#34;&gt;support for vendored&lt;/a&gt; packages, adding behavior to the go tools that will perform a local lookup of packages within a &lt;code&gt;vendor/&lt;/code&gt; directory before going into the GOPATH. This mirrors what tools such as &lt;a href=&#34;https://github.com/tools/godep&#34;&gt;&lt;code&gt;godep&lt;/code&gt;&lt;/a&gt; have previously been doing through manipulation of the GOPATH environment variable. Additionally, because this is an experimental change, it is only enabled if &lt;code&gt;GO15VENDOREXPERIMENT=1&lt;/code&gt; is set in the environment the go command is executed in.&lt;/p&gt;
+
+&lt;h3 id=&#34;compiler-and-runtime-written-in-go:3614b4ac0fb81e46a552fe4b0f2199ab&#34;&gt;Compiler and Runtime written in Go&lt;/h3&gt;
+
+&lt;p&gt;The entire go tool chain has been overhauled to be written entirely in Go. Previously, much of go was written in C because it provided a much easier path to get started with a new language. The bootstrapping process for Go was much easier because it could be built with just a C compiler. Still, the reasons were listed in a 2013 &lt;a href=&#34;https://docs.google.com/document/d/1P3BLR31VA8cvLJLfMibSuTdwTuF7WWLux71CYD0eeD8/edit&#34;&gt;proposal&lt;/a&gt; of this change.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;It is easier to write correct Go code than to write correct C code.&lt;/li&gt;
+&lt;li&gt;It is easier to debug incorrect Go code than to debug incorrect C code.&lt;/li&gt;
+&lt;li&gt;Work on a Go compiler necessarily requires a good understanding of Go. Implementing the compiler in C adds an unnecessary second requirement.&lt;/li&gt;
+&lt;li&gt;Go makes parallel execution trivial compared to C.&lt;/li&gt;
+&lt;li&gt;Go has better standard support than C for modularity, for automated rewriting, for unit testing, and for profiling.&lt;/li&gt;
+&lt;li&gt;Go is much more fun to use than C.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This change was primarily facilitated by an automated translation process, with certain code translated by hand. The process is detailed in Rob Pike&amp;rsquo;s Go to Go &lt;a href=&#34;https://www.youtube.com/watch?v=cF1zJYkBW4A&#34;&gt;talk&lt;/a&gt; and &lt;a href=&#34;https://talks.golang.org/2015/gogo.slide&#34;&gt;slides&lt;/a&gt; which steps through the motivation, history, and how this translation took place.&lt;/p&gt;
+
+&lt;p&gt;There are also a variety of &lt;a href=&#34;https://golang.org/doc/go1.5#tools&#34;&gt;new tools&lt;/a&gt; in Go 1.5 that were much &lt;a href=&#34;https://talks.golang.org/2015/gogo.slide#6&#34;&gt;easier&lt;/a&gt; or newly possible due to this change. Some of them, including stack maps, &lt;a href=&#34;http://agis.io/2014/03/25/contiguous-stacks-in-go.html&#34;&gt;continuous stacks&lt;/a&gt;, and write barriers were nearly impossible to accomplish previously with C in the tool chain because of a lack of type safety and uncertainty that optimizations in C compilers introduce, limiting what&amp;rsquo;s possible for an external language (Go) to accomplish.&lt;/p&gt;
+
+&lt;p&gt;As one might expect, C code that is literally translated into Go would not be optimally efficient. After some basic cleaning up of the raw translation using a purpose-specific tool called &lt;a href=&#34;https://godoc.org/rsc.io/grind&#34;&gt;grind&lt;/a&gt;, the translation was still around ten times slower than the C compiler it was based on. Most of this slowdown was solved through further optimization of c-specific patterns such as complex for loops, treatment of stack variables, unions converted to bloated structs, misplaced declarations on unused variables, and more, which were converted into more idiomatic and efficient forms.&lt;/p&gt;
+
+&lt;p&gt;Still, in the short term this switch has slowed the Go build process by about a &lt;a href=&#34;https://golang.org/doc/go1.5#performance&#34;&gt;factor of two&lt;/a&gt;. However, what the translation process did preserve was the correctness of the compiler, thus avoiding the introduction of new bugs that would inevitably come with a rewrite. In this way, the translated code can be incrementally improved through more idiomatic use of the language to bring performance of the already lightning fast compilation up to where it was previously.&lt;/p&gt;
+
+&lt;h3 id=&#34;true-parallelism:3614b4ac0fb81e46a552fe4b0f2199ab&#34;&gt;True Parallelism&lt;/h3&gt;
+
+&lt;p&gt;The changes I am most excited about in Go 1.5 are the performance improvements. If you&amp;rsquo;re a more experienced Gopher, you&amp;rsquo;ve most likely seen Rob Pike&amp;rsquo;s talk, &lt;a href=&#34;https://youtu.be/cN_DpYBzKso&#34;&gt;Concurrency is not Parallelism&lt;/a&gt;, which explains the important distinction between these concepts. Previously, Go offered a default of concurrency without parallelism. In the latest release, that default has changed.&lt;/p&gt;
+
+&lt;p&gt;The technical change that occurred was switching &lt;a href=&#34;https://golang.org/pkg/runtime/#GOMAXPROCS&#34;&gt;&lt;code&gt;GOMAXPROCS&lt;/code&gt;&lt;/a&gt;, the maximum  number of CPUs that can be executing simultaneously, from it&amp;rsquo;s previous default value of 1 to the number of logical CPUs. The default of one was the logical choice up until now. Due to some limitations in the goroutine scheduler, programs in earlier versions of Go would often get slower when parallelism was introduced by raising &lt;code&gt;GOMAXPROCS&lt;/code&gt;. The &lt;a href=&#34;https://docs.google.com/document/d/1At2Ls5_fhJQ59kDK2DFVhFu3g5mATSXqqV5QrxinasI/edit0&#34;&gt;documentation&lt;/a&gt; on this change illustrates how the performance of a number of reference algorithms has steadily improved when they are parallelized, including in worst case scenarios that are particularly difficult to deal with.&lt;/p&gt;
+
+&lt;p&gt;Because of Go&amp;rsquo;s emphasis on concurrency primarily as a design technique, it wasn&amp;rsquo;t a logical step to enable parallelism by default if it would punish those programs that used concurrency in ways that may not be inherently parallel, or are difficult to parallelize efficiently.&lt;/p&gt;
+
+&lt;p&gt;There were a number of improvements that enabled this shift&amp;hellip;&lt;/p&gt;
+
+&lt;h3 id=&#34;gc-improvements:3614b4ac0fb81e46a552fe4b0f2199ab&#34;&gt;GC improvements&lt;/h3&gt;
+
+&lt;p&gt;The changes to the garbage collector that have come to fruition in Go 1.5 are primarily focused on reducing latency. Go has historically had a stop the world (STW) garbage collector. This type of collector prevents mutation of state while the garbage collection algorithm is taking place, which basically creates a binary set of applications states, one for program execution, and another for garbage collection. In 1.5, the garbage collection becomes concurrent. This means that instead of two distinct and wholly separate application states, the garbage collection phases happen concurrently with program execution.&lt;/p&gt;
+
+&lt;p&gt;Garbage collection was and still is activated by the growth of the heap, with a default trigger of a 100% increase in heap size, though that value is &lt;a href=&#34;https://golang.org/pkg/runtime/debug/#SetGCPercent&#34;&gt;configurable&lt;/a&gt;. With concurrency added, a variety of things now occur during the GC phase. There is still a STW phase, but it is much shorter than before, on the order of 1ms, just setting up the GC process rather than executing it. With a call to internal runtime &lt;a href=&#34;http://golang.org/src/runtime/proc1.go#L507&#34;&gt;methods&lt;/a&gt;, the operation of the program is resumed, but now garbage collection is going on as well on a single dedicated CPU, while the rest remain focused on application work. Interestingly, the threads of the application itself are periodically requested to perform work by the GC, called an &amp;ldquo;assist&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;These changes are not all that needs to occur for concurrency to be enabled. We still have the problem of mutations to application state invalidating the information collected during the mark phase. The solution to this problem is called a &amp;ldquo;write barrier&amp;rdquo;, which doesn&amp;rsquo;t actually block writes from occurring, but rather notifies the GC algorithm of all changes to state that are made while GC is in progress. These notifications allow the GC process and mutations made by the application to coexist. Once the majority of the processing is complete, another short STW phase, on the order of 3ms, performs cleanup and bookkeeping, returning the program to normal execution state.&lt;/p&gt;
+
+&lt;p&gt;The performance improvements that were seen as a result of this are quite remarkable, with GC pause time for large, multi-gigabyte heaps dropping three orders of magnitude from seconds to milliseconds. With these changes, the Go runtime team hopes that wait times for GC will no longer be a barrier for the use of Go, expanding it&amp;rsquo;s applicability to more performance-critical systems. Additionally, these improvements allow Go programs to improve without modification as hardware improves, particularly through increases in the number of available cores.&lt;/p&gt;
+
+&lt;h3 id=&#34;google-app-engine-support:3614b4ac0fb81e46a552fe4b0f2199ab&#34;&gt;Google App Engine support&lt;/h3&gt;
+
+&lt;p&gt;At &lt;a href=&#34;https://www.meta.sc&#34;&gt;Meta&lt;/a&gt; we use Google App Engine to host the majority of our infrastructure as I&amp;rsquo;ve &lt;a href=&#34;https://www.meta.sc/tech/startclean/&#34;&gt;blogged about&lt;/a&gt;. We are very much looking forward to the availability of Go 1.5 on App Engine, and is &lt;a href=&#34;https://groups.google.com/forum/#!topic/google-appengine-go/as9wUqT77YU&#34;&gt;planned&lt;/a&gt;, but unfortunately there is &lt;a href=&#34;https://groups.google.com/forum/#!topic/google-appengine-go/Vg5F0sUMTFc&#34;&gt;no definitive date&lt;/a&gt; as of yet. We&amp;rsquo;ll be moving to is as soon as it&amp;rsquo;s available!&lt;/p&gt;
+
+&lt;h3 id=&#34;conclusions:3614b4ac0fb81e46a552fe4b0f2199ab&#34;&gt;Conclusions&lt;/h3&gt;
+
+&lt;p&gt;Go 1.5 solidifies the Go tool chain by moving it to Go and brings performance improvements that increase it&amp;rsquo;s competitiveness with other high-performance languages. There are plenty of other changes that I didn&amp;rsquo;t get a chance to touch on, so be sure to take a look at the full &lt;a href=&#34;https://golang.org/doc/go1.5&#34;&gt;Go 1.5 Release Notes&lt;/a&gt; for other details.&lt;/p&gt;
+
+&lt;h2 id=&#34;references:3614b4ac0fb81e46a552fe4b0f2199ab&#34;&gt;References&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://blog.golang.org/go1.5&#34;&gt;Go 1.5 is released - The Go Blog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://golang.org/doc/go1.5&#34;&gt;Go 1.5 Release Notes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.google.com/document/d/16Y4IsnNRCN43Mx0NZc5YXZLovrHvvLhK_h0KN8woTO4/edit#&#34;&gt;Go 1.4+ Garbage Collection (GC) Plan and Roadmap&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.google.com/document/d/1wmjrocXIWTr1JxU-3EQBI6BK6KgtiFArkG47XK73xIQ/edit#&#34;&gt;Go 1.5 concurrent garbage collector pacing&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.google.com/document/d/1At2Ls5_fhJQ59kDK2DFVhFu3g5mATSXqqV5QrxinasI/edit&#34;&gt;Go 1.5 GOMAXPROCS Default&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://talks.golang.org/2015/go-gc.pdf&#34;&gt;GopherCon 2015 - Go GC:Latency Problem Solved&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=aiv1JOfMjm0&#34;&gt;Corresponding talk&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.google.com/document/d/1e8kOo3r51b2BWtTs_1uADIA5djfXhPT36s6eHVRIvaU/edit&#34;&gt;Go 1.4 “Internal” Packages&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.google.com/document/d/1P3BLR31VA8cvLJLfMibSuTdwTuF7WWLux71CYD0eeD8/edit&#34;&gt;Go 1.3+ Compiler Overhaul&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://talks.golang.org/2015/gogo.slide#3&#34;&gt;Go to Go&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=cF1zJYkBW4A&#34;&gt;Corresponding talk&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.google.com/document/d/1Bz5-UB7g2uPBdOx-rw5t9MxJwkfpx90cqG9AFL0JAYo/edit&#34;&gt;Go 1.5 Vendor Experiment&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Linking Dynamic C&#43;&#43; Libraries with Go</title>
@@ -186,7 +278,7 @@ FAIL    github.com/kujenga/gosnow [build failed]
     </item>
     
     <item>
-      <title>my website</title>
+      <title>A Website</title>
       <link>https://ataylor.io/blog/blogging/</link>
       <pubDate>Wed, 17 Jun 2015 01:04:26 -0400</pubDate>
       
@@ -224,7 +316,7 @@ FAIL    github.com/kujenga/gosnow [build failed]
     </item>
     
     <item>
-      <title>About me</title>
+      <title>About</title>
       <link>https://ataylor.io/about/</link>
       <pubDate>Tue, 16 Jun 2015 22:59:46 -0400</pubDate>
       
@@ -275,9 +367,9 @@ FAIL    github.com/kujenga/gosnow [build failed]
 
 &lt;p&gt;&lt;a href=&#34;https://github.com/kujenga/OpenBazaar&#34;&gt;Forked&lt;/a&gt; the &lt;a href=&#34;https://github.com/OpenBazaar/OpenBazaar&#34;&gt;OpenBazaar&lt;/a&gt; project in its earliest stages to emulate a hosted site environment within a P2P network. Used a &lt;a href=&#34;http://xlattice.sourceforge.net/components/protocol/kademlia/specs.html&#34;&gt;Kademlia&lt;/a&gt; distributed hash table to facilitate replicated storage of a user’s site across multiple peers.&lt;/p&gt;
 
-&lt;h3 id=&#34;electric-powered-off-road-vehicle-summer-2011-fall-2013:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Electric Powered Off-Road Vehicle - Summer 2011 - Fall 2013&lt;/h3&gt;
+&lt;h3 id=&#34;electric-powered-off-road-vehicle:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Electric Powered Off-Road Vehicle&lt;/h3&gt;
 
-&lt;p&gt;Hand-fabricated a full-suspension metal frame from raw steel tubing. Designed the power train electronics system, used CAD software to design and fabricate control board, motor mount, and drivetrain assembly.&lt;/p&gt;
+&lt;p&gt;Hand-fabricated a full-suspension metal frame from raw steel tubing. Designed the power train electronics system, used CAD software to design and fabricate control board, motor mount, and drive train assembly.&lt;/p&gt;
 
 &lt;h2 id=&#34;education:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Education&lt;/h2&gt;
 
