@@ -95,17 +95,17 @@ window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){va
 
 <p>This change was primarily facilitated by an automated translation process, with certain code translated by hand. The process is detailed in Rob Pike&rsquo;s Go to Go <a href="https://www.youtube.com/watch?v=cF1zJYkBW4A">talk</a> and <a href="https://talks.golang.org/2015/gogo.slide">slides</a> which steps through the motivation, history, and how this translation took place.</p>
 
-<p>There are also a variety of <a href="https://golang.org/doc/go1.5#tools">new tools</a> in Go 1.5 that were much <a href="https://talks.golang.org/2015/gogo.slide#6">easier</a> or newly possible due to this change. Some of them, including stack maps, <a href="http://agis.io/2014/03/25/contiguous-stacks-in-go.html">continuous stacks</a>, and write barriers were nearly impossible to accomplish previously with C in the tool chain because of a lack of type safety and uncertainty that optimizations in C compilers introduce, limiting what&rsquo;s possible for an external language (Go) to accomplish.</p>
+<p>There are also a variety of <a href="https://golang.org/doc/go1.5#tools">new tools</a> in Go 1.5 that were much <a href="https://talks.golang.org/2015/gogo.slide#6">easier</a> or newly possible due to this change. Some changes in 1.5, including stack maps, <a href="http://agis.io/2014/03/25/contiguous-stacks-in-go.html">continuous stacks</a>, and write barriers were nearly impossible to accomplish previously with C in the tool chain because of a lack of type safety and uncertainty that optimizations in C compilers introduce, limiting what&rsquo;s possible for an external language (Go) to accomplish.</p>
 
-<p>As one might expect, C code that is literally translated into Go would not be optimally efficient. After some basic cleaning up of the raw translation using a purpose-specific tool called <a href="https://godoc.org/rsc.io/grind">grind</a>, the translation was still around ten times slower than the C compiler it was based on. Most of this slowdown was solved through further optimization of c-specific patterns such as complex for loops, treatment of stack variables, unions converted to bloated structs, misplaced declarations on unused variables, and more, which were converted into more idiomatic and efficient forms.</p>
+<p>As one might expect, C code that is literally translated into Go is not optimally efficient. After some basic cleaning up of the raw translation using a purpose-specific tool called <a href="https://godoc.org/rsc.io/grind">grind</a>, the translation was still around ten times slower than the C compiler it was based on. Most of this slowdown was solved through further optimization of c-specific patterns such as complex for loops, treatment of stack variables, unions converted to bloated structs, misplaced declarations on unused variables, and more, which were converted into more idiomatic and efficient forms.</p>
 
 <p>Still, in the short term this switch has slowed the Go build process by about a <a href="https://golang.org/doc/go1.5#performance">factor of two</a>. However, what the translation process did preserve was the correctness of the compiler, thus avoiding the introduction of new bugs that would inevitably come with a rewrite. In this way, the translated code can be incrementally improved through more idiomatic use of the language to bring performance of the already lightning fast compilation up to where it was previously.</p>
 
 <h3 id="true-parallelism:3614b4ac0fb81e46a552fe4b0f2199ab">True Parallelism</h3>
 
-<p>The changes I am most excited about in Go 1.5 are the performance improvements. If you&rsquo;re a more experienced Gopher, you&rsquo;ve most likely seen Rob Pike&rsquo;s talk, <a href="https://youtu.be/cN_DpYBzKso">Concurrency is not Parallelism</a>, which explains the important distinction between these concepts. Previously, Go offered a default of concurrency without parallelism. In the latest release, that default has changed.</p>
+<p>The changes I am most excited about in Go 1.5 are the performance improvements. One large step forward has occurred in the ability to perform parallel computation. If you&rsquo;re a more experienced Gopher, you&rsquo;ve most likely seen Rob Pike&rsquo;s talk, <a href="https://youtu.be/cN_DpYBzKso">Concurrency is not Parallelism</a>, which explains the important distinction between these concepts. Previously, Go offered a default of concurrency without parallelism. In the latest release, that default has changed.</p>
 
-<p>The technical change that occurred was switching <a href="https://golang.org/pkg/runtime/#GOMAXPROCS"><code>GOMAXPROCS</code></a>, the maximum  number of CPUs that can be executing simultaneously, from it&rsquo;s previous default value of 1 to the number of logical CPUs. The default of one was the logical choice up until now. Due to some limitations in the goroutine scheduler, programs in earlier versions of Go would often get slower when parallelism was introduced by raising <code>GOMAXPROCS</code>. The <a href="https://docs.google.com/document/d/1At2Ls5_fhJQ59kDK2DFVhFu3g5mATSXqqV5QrxinasI/edit0">documentation</a> on this change illustrates how the performance of a number of reference algorithms has steadily improved when they are parallelized, including in worst case scenarios that are particularly difficult to deal with.</p>
+<p>The technical change that occurred was switching <a href="https://golang.org/pkg/runtime/#GOMAXPROCS"><code>GOMAXPROCS</code></a>, the maximum  number of CPUs that can be executing simultaneously, from it&rsquo;s previous default value of 1 to the number of logical CPUs. The default of one was the logical choice up until now. Due to some limitations in the goroutine scheduler, programs in earlier versions of Go would often get slower when parallelism was introduced by raising <code>GOMAXPROCS</code>. The <a href="https://docs.google.com/document/d/1At2Ls5_fhJQ59kDK2DFVhFu3g5mATSXqqV5QrxinasI/edit">documentation</a> on this change illustrates how the performance of a number of reference algorithms has steadily improved when they are parallelized, including in worst case scenarios that are particularly difficult to deal with.</p>
 
 <p>Because of Go&rsquo;s emphasis on concurrency primarily as a design technique, it wasn&rsquo;t a logical step to enable parallelism by default if it would punish those programs that used concurrency in ways that may not be inherently parallel, or are difficult to parallelize efficiently.</p>
 
@@ -150,6 +150,7 @@ window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){va
 <li><a href="https://www.youtube.com/watch?v=cF1zJYkBW4A">Corresponding talk</a></li>
 </ul></li>
 <li><a href="https://docs.google.com/document/d/1Bz5-UB7g2uPBdOx-rw5t9MxJwkfpx90cqG9AFL0JAYo/edit">Go 1.5 Vendor Experiment</a></li>
+<li><a href="http://blog.golang.org/go15gc">The Go Blog - Go GC: Prioritizing low latency and simplicity</a></li>
 </ul>
 
                     <br>
@@ -201,7 +202,7 @@ window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){va
 
             <div class=""> 
                 <h4>September 20, 2015<br>
-                <small>1476 words</small></h4>
+                <small>1500 words</small></h4>
                 
                 <hr>
                 <strong>Tags</strong><br>
