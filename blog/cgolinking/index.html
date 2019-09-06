@@ -6,8 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Creating a Go wrapper around a cross-platform build process for a dynamically built and linked C&#43;&#43; library">
     <meta name="author" content="Aaron Taylor">
+
+    <meta name="google-site-verification" content="tiuapB3N9vmYdU9_nwX6t_iHEqjDsOaSi8sRQ_CppY4" />
+
     <link rel="icon" href="../../favicon.ico">
     <link rel="canonical" href="https://ataylor.io/blog/cgolinking/">
+
     
 
     <title>Aaron Taylor - Linking Dynamic C&#43;&#43; Libraries with Go</title>
@@ -17,25 +21,29 @@ window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){va
 ;NREUM.info={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",licenseKey:"ce48477ed0",applicationID:"7067223",sa:1,agent:"js-agent.newrelic.com/nr-632.min.js"}
 </script>
     
-    
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-56787812-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
 
-      ga('create', 'UA-56787812-1', 'auto');
-      ga('send', 'pageview');
-    </script>
 
     
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-<link href='http://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
 
 
-<link type="text/css" rel="stylesheet" href="https://ataylor.io/css/styles.css"/>
+<link type="text/css" rel="stylesheet" href="/css/styles.css"/>
+
 
 
 
@@ -55,9 +63,9 @@ window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){va
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li><a href="https://ataylor.io/blog">Blog</a></li>
+        <li><a href="/blog">Blog</a></li>
         
-        <li><a href="https://ataylor.io/about">About</a></li>
+        <li><a href="/about">About</a></li>
       </ul>
     </div>
   </div>
@@ -74,7 +82,7 @@ window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){va
 
 <p>A spectacular tool that we have been using is <a href="https://apiary.io">Apiary</a>, a service that provides API documentation through a super set of markdown that is fully parsable, providing mocked APIs and examples through a single set of documentation. The format of this markdown documentation is <a href="https://apiblueprint.org">API Blueprint</a> format, for which the documentation and a rich set of parsing libraries and tooling has been released under the MIT license.</p>
 
-<h3 id="a-confluence-of-interests:f0f98a633f4540118f1ad2a10a32d79e">A Confluence of Interests</h3>
+<h3 id="a-confluence-of-interests">A Confluence of Interests</h3>
 
 <p>The core parsing library for the API BLueprint format is called <a href="https://github.com/apiaryio/snowcrash">Snow Crash</a> and is written in C++. Built on top of this library is a tool called <a href="https://github.com/apiaryio/drafter">Drafter</a>, also a C++ library, which provides a cleaner interface to interact with the primary purpose of Snow Crash, parsing human readable markdown into json.</p>
 
@@ -82,7 +90,7 @@ window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){va
 
 <p>Since the core library is written in C++, this means that it would also be a chance to work with <a href="http://golang.org/cmd/cgo/">cgo</a>, the Go language&rsquo;s too to interact with C code. This is something that&rsquo;s been on my want-to-do list for a while, but this seemed like the perfect opportunity to dive in.</p>
 
-<h2 id="experimenting-with-cgo:f0f98a633f4540118f1ad2a10a32d79e">Experimenting with cgo</h2>
+<h2 id="experimenting-with-cgo">Experimenting with cgo</h2>
 
 <p>The Go blog has a great post to get started with C and Go called <a href="http://blog.golang.org/c-go-cgo">C? Go? Cgo!</a> that I used to get initially up and running.</p>
 
@@ -112,13 +120,13 @@ func main() {
 }
 </code></pre>
 
-<h2 id="remembering-c:f0f98a633f4540118f1ad2a10a32d79e">Remembering C</h2>
+<h2 id="remembering-c">Remembering C</h2>
 
 <p>The existing wrapper libraries use the Drafter source as a git submodule which is compiled into a shared library for use by the wrapper. Most of my experience with C/C++ is either with simple projects in a single folder with only standard library dependencies, or from within an IDE that handles most of the complexities of compilation for you. Since there would be a bigger manual component to this project, creating a simple proof of concept interface written in C seemed like a prudent first step.</p>
 
 <p>I would be wrapping the <a href="https://github.com/apiaryio/drafter/blob/master/README.md#c-interface">C-Interface</a> described in the project&rsquo;s README file, so getting the example code up and running seemed to be a good start.</p>
 
-<h4 id="drafter-c-based-test-code:f0f98a633f4540118f1ad2a10a32d79e">Drafter C-based test code</h4>
+<h4 id="drafter-c-based-test-code">Drafter C-based test code</h4>
 
 <pre><code class="language-c">#include &lt;stdio.h&gt;
 #include &lt;stdlib.h&gt;
@@ -146,13 +154,13 @@ int main(int argc, char const *argv[])
 
 <p>After this command is executed, we end up with a file called <code>ctest.o</code>, which is the object file for the c code above. This <code>.o</code> file needs to be again compiled in order to properly link it to the dynamic library for drafter. This is the tricky part. A big help to me here was looking at the how the RedSnow library sets up ruby&rsquo;s FFI module to interact with Drafter&rsquo;s C interface.</p>
 
-<h3 id="detour-into-ruby:f0f98a633f4540118f1ad2a10a32d79e">Detour into Ruby</h3>
+<h3 id="detour-into-ruby">Detour into Ruby</h3>
 
 <p>From looking at <a href="https://github.com/apiaryio/redsnow/blob/master/lib/redsnow/binding.rb">binding</a> file for the RedSnow library, two things became clear. First, there were platform dependent aspects of this compilation process. These will be especially important in setting up CI for my library later on. The other element present here was that the dynamic library itself was not created by the build process described in Drafter&rsquo;s README. looking at the <a href="https://github.com/apiaryio/redsnow/blob/master/Rakefile"><code>Rakefile</code></a> for RedSnow, I found a special configuration option which prompted the creation of a shared library, a <code>--shared</code> flag on the build configuration for Drafter.</p>
 
 <p>Still, there were a few more uncertainties. Being unfamiliar with the specifics of dynamic library compilation, there were a few interactions with Ruby&rsquo;s FFI library that I wanted to understand more. So, taking inspiration from Go&rsquo;s best practice of reading the source code, I dived into the <a href="https://github.com/ffi/ffi">FFI source</a>. The <a href="https://github.com/ffi/ffi/blob/master/lib/ffi/platform.rb"><code>lib/ffi/platform.rb</code></a> file contained most of what I was looking for. The definition of <code>LIBSUFFIX</code> and the way that platform tests were handled would be very useful later on. For now, I was that Mac dynamic libraries have a <code>.dylib</code> extension. That and the compilation configuration were just what I needed.</p>
 
-<h3 id="back-to-c:f0f98a633f4540118f1ad2a10a32d79e">Back to C</h3>
+<h3 id="back-to-c">Back to C</h3>
 
 <p>Armed with this knowledge of how the Ruby wrapper library handled setting up the C bindings, I hashed through getting my simple C example working.</p>
 
@@ -176,7 +184,7 @@ make: *** [test] Trace/BPT trap: 5
 
 <p>Finally, it worked! I just about jumped for joy. After hours of tweaks and research, I was calling into a custom compiled dynamic library, something I hadn&rsquo;t a clue about just a day earlier.</p>
 
-<h2 id="translating-to-go:f0f98a633f4540118f1ad2a10a32d79e">Translating to Go</h2>
+<h2 id="translating-to-go">Translating to Go</h2>
 
 <p>After successfully creating a C version of the basic functionality that I wanted to implement, and with a basic understanding of Go&rsquo;s interop with C, I started porting the example code to a Go version with the same functionality.</p>
 
@@ -184,7 +192,7 @@ make: *** [test] Trace/BPT trap: 5
 
 <p>I simply copied the options for the first compilation step for the C program as the value for <code>CFLAGS</code>, and for options for the second compilation step as the value for <code>LDFLAGS</code>, and to my great delight, it worked! The jump from C to Go had been the easiest part so far.</p>
 
-<h3 id="writing-tests:f0f98a633f4540118f1ad2a10a32d79e">Writing Tests</h3>
+<h3 id="writing-tests">Writing Tests</h3>
 
 <p>I got the code up and running as a single file using the command <code>go run main.go</code>, treating it as a single file. Since my goal was to have this be a wrapper library, my next logical step was to convert this into a package with some tests! Unfortunately, this change introduced another error.</p>
 
@@ -198,7 +206,7 @@ FAIL    github.com/kujenga/gosnow [build failed]
 
 <p>The issue here was that after changing the go code to be a package, the Go compiler was treating my unrelated C test program as part of the package, and since Go creates its own <code>main</code> method in tests, there was a duplicate main method. Moving the C file to a subdirectory got things back up and running.</p>
 
-<h2 id="continuous-integration:f0f98a633f4540118f1ad2a10a32d79e">Continuous Integration</h2>
+<h2 id="continuous-integration">Continuous Integration</h2>
 
 <p>These days, it seems like any open source library or project worth its salt has a continuous integration setup and test coverage metrics proudly displayed at the top of its README file. This would require building the project on a Linux machine in the cloud. As I saw while digging into Ruby&rsquo;s FFI source code, there are a number of things to be aware of when compiling on Linux. I&rsquo;m punting on Windows support for now, although theoretically it wouldn&rsquo;t be too difficult.</p>
 
@@ -206,11 +214,11 @@ FAIL    github.com/kujenga/gosnow [build failed]
 
 <p>After experimenting manually on a Linux server, I found that the <code>LD_LIBRARY_PATH</code> environment variable, which I had run into earlier in my research but was unhelpful on the Mac, solved my problem quite nicely. By specifying the proper path as an environment variable in the CI setup, I was able to get a working build on <a href="https://travis-ci.org/kujenga/gosnow">Travis-CI</a>. To monitor test coverage of the library, I setup the Travis build to send reports to <a href="https://coveralls.io/r/kujenga/gosnow">Coveralls</a> using the <a href="https://github.com/mattn/goveralls">goveralls</a> library. With a link to the <a href="https://godoc.org/github.com/kujenga/gosnow">godoc</a> for this project, things were looking good!</p>
 
-<h2 id="implementation:f0f98a633f4540118f1ad2a10a32d79e">Implementation</h2>
+<h2 id="implementation">Implementation</h2>
 
 <p>With the example code working, I began implementing functionality similar to that provided by the Ruby library, with structured, parsed versions of the JSON output from Drafter nicely formatted into Go structs. It&rsquo;s a rather complex data structure to represent, but I was able to replicate the elements of the abstract syntax tree, defined in the <a href="https://github.com/apiaryio/snowcrash/blob/master/src/Blueprint.h"><code>Blueprint.h</code></a> file within the Snow Crash library. My version was mostly a port of what is present in the RedSnow library currently. Still remaining is the task of providing struct-based representation of the sourcemap format, as specified in the <a href="https://github.com/apiaryio/snowcrash/blob/master/src/BlueprintSourcemap.h"><code>BlueprintSourcemap.h</code></a> file in the Snow Crash repository. I also wrote a series of tests utilizing the [fixtures]() from RedSnow as well as some of my own. I still have some work to do to ensure that there is complete parity between the structs I created and the syntax specification itself, but at the very least the code runs without errors.</p>
 
-<h3 id="improvements:f0f98a633f4540118f1ad2a10a32d79e">Improvements</h3>
+<h3 id="improvements">Improvements</h3>
 
 <p>There are a few things which could be improved about the installation and function of this library. Firstly, to encapsulate the behavior necessary to install this library, I created a makefile with the appropriate options for the various build environments that the code would be running in. Go is trying to move away from tooling that isn&rsquo;t endogenous to Go itself, so a better solution here is desired.</p>
 
@@ -220,15 +228,15 @@ FAIL    github.com/kujenga/gosnow [build failed]
 
 <p>One concession that would have to be made in order to make this library &ldquo;go gettable&rdquo; is to vendor the Drafter library within the repository itself. As is documented by <a href="https://github.com/golang/go/issues/7764">Golang issue 7764</a>, git submodules, which I am currently using to keep track of Drafter, are not automatically retrieved by the <code>go get</code> tool, and it is uncertain whether they ever will be. I&rsquo;ll be keeping an eye on that issue.</p>
 
-<h3 id="future-work:f0f98a633f4540118f1ad2a10a32d79e">Future Work</h3>
+<h3 id="future-work">Future Work</h3>
 
 <p>I touched briefly on how defining APIs is crucial to my work at <a href="https://meta.sc">Meta</a>. My eventual goal with this library is to build off of it to use out existing documentation for our APIs to generate arbitrary other forms of output, including client libraries for our APIs, mock interfaces for testing our micro services, and even things like <a href="https://www.getpostman.com">Postman</a> collections, all from a single API definition. Doing this through Go&rsquo;s built in <a href="http://blog.golang.org/generate">code generation</a> functionality is my next goal, and will likely be the topic of a future blog post.</p>
 
-<h3 id="the-code:f0f98a633f4540118f1ad2a10a32d79e">The Code</h3>
+<h3 id="the-code">The Code</h3>
 
 <p>My code is up on Github at <a href="https://github.com/kujenga/gosnow">github.com/kujenga/gosnow</a>. Check out the <a href="https://godoc.org/github.com/kujenga/gosnow">godoc</a> for information on using the library. Like Drafter and most of the code underneath is, gosnow is MIT Licensed.</p>
 
-<h3 id="references:f0f98a633f4540118f1ad2a10a32d79e">References</h3>
+<h3 id="references">References</h3>
 
 <ul>
 <li><a href="http://blog.golang.org/c-go-cgo">The Go Blog - C? Go? Cgo!</a></li>
@@ -274,9 +282,11 @@ FAIL    github.com/kujenga/gosnow [build failed]
             <h4>Other Posts</h4>
             <ul>
             
-                <li><a href="https://meta.sc/tech/swiftobjc" title="Facilitating Idiomatic Swift with Objective-C" target=newtab>Facilitating Idiomatic Swift with Objective-C</a></li>
+                <li><a href="https://www.meta.sc/tech/govendoring/" title="Vendoring Dependencies in Go" target=newtab>Vendoring Dependencies in Go</a></li>
             
                 <li><a href="https://meta.sc/tech/startclean" title="Starting Clean" target=newtab>Starting Clean</a></li>
+            
+                <li><a href="https://meta.sc/tech/swiftobjc" title="Facilitating Idiomatic Swift with Objective-C" target=newtab>Facilitating Idiomatic Swift with Objective-C</a></li>
             
             </ul>
         </div>
@@ -312,13 +322,16 @@ FAIL    github.com/kujenga/gosnow [build failed]
             <a href="https://github.com/kujenga" class="btn-social btn-outline" target=newtab><i class="fa fa-fw fa-github"></i></a>
         </li>
         <li>
-            <a href="https://angel.co/aaron-taylor-1" class="btn-social btn-outline" target=newtab><i class="fa fa-fw fa-angellist"></i></a>
+            <a href="https://angel.co/ataylor0123" class="btn-social btn-outline" target=newtab><i class="fa fa-fw fa-angellist"></i></a>
         </li>
         <li>
             <a href="https://twitter.com/ataylor0123" class="btn-social btn-outline" target=newtab><i class="fa fa-fw fa-twitter"></i></a>
         </li>
         <li>
             <a href="https://instagram.com/ataylor0123/" class="btn-social btn-outline" target=newtab><i class="fa fa-fw fa-instagram"></i></a>
+        </li>
+        <li>
+            <a href="https://keybase.io/ataylor" class="btn-social btn-outline" target=newtab><i class="fa fa-fw fa-key"></i></a>
         </li>
       </ul>
     </div>

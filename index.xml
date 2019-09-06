@@ -7,7 +7,9 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 20 Sep 2015 18:14:20 -0400</lastBuildDate>
-    <atom:link href="https://ataylor.io/index.xml" rel="self" type="application/rss+xml" />
+    
+	<atom:link href="https://ataylor.io/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Improvements in Go 1.5</title>
@@ -15,91 +17,8 @@
       <pubDate>Sun, 20 Sep 2015 18:14:20 -0400</pubDate>
       
       <guid>https://ataylor.io/blog/go15/</guid>
-      <description>
-
-&lt;p&gt;With the relatively recent release Go 1.5, there are a variety of interesting areas to look at in regards to what&amp;rsquo;s changed with the language. As one would expect based on both Go&amp;rsquo;s philosophy and it&amp;rsquo;s &lt;a href=&#34;http://golang.org/doc/go1compat&#34;&gt;future compatibility&lt;/a&gt; guidelines, not much has changed from a language feature standpoint. Still, there a number of exciting under-the-hood enhancements in the latest release.&lt;/p&gt;
-
-&lt;h3 id=&#34;package-system:3614b4ac0fb81e46a552fe4b0f2199ab&#34;&gt;Package system&lt;/h3&gt;
-
-&lt;p&gt;New functionality has been introduced to the packaging system in two ways. First, support for &lt;a href=&#34;https://docs.google.com/document/d/1e8kOo3r51b2BWtTs_1uADIA5djfXhPT36s6eHVRIvaU/edit&#34;&gt;internal packages&lt;/a&gt; has been brought out of it&amp;rsquo;s experimental phase in Go 1.4 where it was being testing within GOROOT to now apply to packages within the GOPATH. This will allow Go packages to divide their different functions up into more logical components without exposing APIs in unwanted ways. This is a pattern that the &lt;a href=&#34;https://godoc.org/google.golang.org/appengine/internal&#34;&gt;App Engine SDK&lt;/a&gt; uses well, wrapping supporting functionality that is largely auto-generated in internal packages, making the logical code exposed through the API more readable and easier to maintain.&lt;/p&gt;
-
-&lt;p&gt;The second addition to the package system was experimental &lt;a href=&#34;https://docs.google.com/document/d/1Bz5-UB7g2uPBdOx-rw5t9MxJwkfpx90cqG9AFL0JAYo/edit&#34;&gt;support for vendored&lt;/a&gt; packages, adding behavior to the go tools that will perform a local lookup of packages within a &lt;code&gt;vendor/&lt;/code&gt; directory before going into the GOPATH. This mirrors what tools such as &lt;a href=&#34;https://github.com/tools/godep&#34;&gt;&lt;code&gt;godep&lt;/code&gt;&lt;/a&gt; have previously been doing through manipulation of the GOPATH environment variable. Additionally, because this is an experimental change, it is only enabled if &lt;code&gt;GO15VENDOREXPERIMENT=1&lt;/code&gt; is set in the environment the go command is executed in.&lt;/p&gt;
-
-&lt;h3 id=&#34;compiler-and-runtime-written-in-go:3614b4ac0fb81e46a552fe4b0f2199ab&#34;&gt;Compiler and Runtime written in Go&lt;/h3&gt;
-
-&lt;p&gt;The entire go tool chain has been overhauled to be written entirely in Go. Previously, much of go was written in C because it provided a much easier path to get started with a new language. The bootstrapping process for Go was much easier because it could be built with just a C compiler. Still, the reasons were listed in a 2013 &lt;a href=&#34;https://docs.google.com/document/d/1P3BLR31VA8cvLJLfMibSuTdwTuF7WWLux71CYD0eeD8/edit&#34;&gt;proposal&lt;/a&gt; of this change.&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;It is easier to write correct Go code than to write correct C code.&lt;/li&gt;
-&lt;li&gt;It is easier to debug incorrect Go code than to debug incorrect C code.&lt;/li&gt;
-&lt;li&gt;Work on a Go compiler necessarily requires a good understanding of Go. Implementing the compiler in C adds an unnecessary second requirement.&lt;/li&gt;
-&lt;li&gt;Go makes parallel execution trivial compared to C.&lt;/li&gt;
-&lt;li&gt;Go has better standard support than C for modularity, for automated rewriting, for unit testing, and for profiling.&lt;/li&gt;
-&lt;li&gt;Go is much more fun to use than C.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;This change was primarily facilitated by an automated translation process, with certain code translated by hand. The process is detailed in Rob Pike&amp;rsquo;s Go to Go &lt;a href=&#34;https://www.youtube.com/watch?v=cF1zJYkBW4A&#34;&gt;talk&lt;/a&gt; and &lt;a href=&#34;https://talks.golang.org/2015/gogo.slide&#34;&gt;slides&lt;/a&gt; which steps through the motivation, history, and how this translation took place.&lt;/p&gt;
-
-&lt;p&gt;There are also a variety of &lt;a href=&#34;https://golang.org/doc/go1.5#tools&#34;&gt;new tools&lt;/a&gt; in Go 1.5 that were much &lt;a href=&#34;https://talks.golang.org/2015/gogo.slide#6&#34;&gt;easier&lt;/a&gt; or newly possible due to this change. Some changes in 1.5, including stack maps, &lt;a href=&#34;http://agis.io/2014/03/25/contiguous-stacks-in-go.html&#34;&gt;continuous stacks&lt;/a&gt;, and write barriers were nearly impossible to accomplish previously with C in the tool chain because of a lack of type safety and uncertainty that optimizations in C compilers introduce, limiting what&amp;rsquo;s possible for an external language (Go) to accomplish.&lt;/p&gt;
-
-&lt;p&gt;As one might expect, C code that is literally translated into Go is not optimally efficient. After some basic cleaning up of the raw translation using a purpose-specific tool called &lt;a href=&#34;https://godoc.org/rsc.io/grind&#34;&gt;grind&lt;/a&gt;, the translation was still around ten times slower than the C compiler it was based on. Most of this slowdown was solved through further optimization of c-specific patterns such as complex for loops, treatment of stack variables, unions converted to bloated structs, misplaced declarations on unused variables, and more, which were converted into more idiomatic and efficient forms.&lt;/p&gt;
-
-&lt;p&gt;Still, in the short term this switch has slowed the Go build process by about a &lt;a href=&#34;https://golang.org/doc/go1.5#performance&#34;&gt;factor of two&lt;/a&gt;. However, what the translation process did preserve was the correctness of the compiler, thus avoiding the introduction of new bugs that would inevitably come with a rewrite. In this way, the translated code can be incrementally improved through more idiomatic use of the language to bring performance of the already lightning fast compilation up to where it was previously.&lt;/p&gt;
-
-&lt;h3 id=&#34;true-parallelism:3614b4ac0fb81e46a552fe4b0f2199ab&#34;&gt;True Parallelism&lt;/h3&gt;
-
-&lt;p&gt;The changes I am most excited about in Go 1.5 are the performance improvements. One large step forward has occurred in the ability to perform parallel computation. If you&amp;rsquo;re a more experienced Gopher, you&amp;rsquo;ve most likely seen Rob Pike&amp;rsquo;s talk, &lt;a href=&#34;https://youtu.be/cN_DpYBzKso&#34;&gt;Concurrency is not Parallelism&lt;/a&gt;, which explains the important distinction between these concepts. Previously, Go offered a default of concurrency without parallelism. In the latest release, that default has changed.&lt;/p&gt;
-
-&lt;p&gt;The technical change that occurred was switching &lt;a href=&#34;https://golang.org/pkg/runtime/#GOMAXPROCS&#34;&gt;&lt;code&gt;GOMAXPROCS&lt;/code&gt;&lt;/a&gt;, the maximum  number of CPUs that can be executing simultaneously, from it&amp;rsquo;s previous default value of 1 to the number of logical CPUs. The default of one was the logical choice up until now. Due to some limitations in the goroutine scheduler, programs in earlier versions of Go would often get slower when parallelism was introduced by raising &lt;code&gt;GOMAXPROCS&lt;/code&gt;. The &lt;a href=&#34;https://docs.google.com/document/d/1At2Ls5_fhJQ59kDK2DFVhFu3g5mATSXqqV5QrxinasI/edit&#34;&gt;documentation&lt;/a&gt; on this change illustrates how the performance of a number of reference algorithms has steadily improved when they are parallelized, including in worst case scenarios that are particularly difficult to deal with.&lt;/p&gt;
-
-&lt;p&gt;Because of Go&amp;rsquo;s emphasis on concurrency primarily as a design technique, it wasn&amp;rsquo;t a logical step to enable parallelism by default if it would punish those programs that used concurrency in ways that may not be inherently parallel, or are difficult to parallelize efficiently.&lt;/p&gt;
-
-&lt;p&gt;There were a number of improvements that enabled this shift&amp;hellip;&lt;/p&gt;
-
-&lt;h3 id=&#34;gc-improvements:3614b4ac0fb81e46a552fe4b0f2199ab&#34;&gt;GC improvements&lt;/h3&gt;
-
-&lt;p&gt;The changes to the garbage collector that have come to fruition in Go 1.5 are primarily focused on reducing latency. Go has historically had a stop the world (STW) garbage collector. This type of collector prevents mutation of state while the garbage collection algorithm is taking place, which basically creates a binary set of applications states, one for program execution, and another for garbage collection. In 1.5, the garbage collection becomes concurrent. This means that instead of two distinct and wholly separate application states, the garbage collection phases happen concurrently with program execution.&lt;/p&gt;
-
-&lt;p&gt;Garbage collection was and still is activated by the growth of the heap, with a default trigger of a 100% increase in heap size, though that value is &lt;a href=&#34;https://golang.org/pkg/runtime/debug/#SetGCPercent&#34;&gt;configurable&lt;/a&gt;. With concurrency added, a variety of things now occur during the GC phase. There is still a STW phase, but it is much shorter than before, on the order of 1ms, just setting up the GC process rather than executing it. With a call to internal runtime &lt;a href=&#34;http://golang.org/src/runtime/proc1.go#L507&#34;&gt;methods&lt;/a&gt;, the operation of the program is resumed, but now garbage collection is going on as well on a single dedicated CPU, while the rest remain focused on application work. Interestingly, the threads of the application itself are periodically requested to perform work by the GC, called an &amp;ldquo;assist&amp;rdquo;.&lt;/p&gt;
-
-&lt;p&gt;These changes are not all that needs to occur for concurrency to be enabled. We still have the problem of mutations to application state invalidating the information collected during the mark phase. The solution to this problem is called a &amp;ldquo;write barrier&amp;rdquo;, which doesn&amp;rsquo;t actually block writes from occurring, but rather notifies the GC algorithm of all changes to state that are made while GC is in progress. These notifications allow the GC process and mutations made by the application to coexist. Once the majority of the processing is complete, another short STW phase, on the order of 3ms, performs cleanup and bookkeeping, returning the program to normal execution state.&lt;/p&gt;
-
-&lt;p&gt;The performance improvements that were seen as a result of this are quite remarkable, with GC pause time for large, multi-gigabyte heaps dropping three orders of magnitude from seconds to milliseconds. With these changes, the Go runtime team hopes that wait times for GC will no longer be a barrier for the use of Go, expanding it&amp;rsquo;s applicability to more performance-critical systems. Additionally, these improvements allow Go programs to improve without modification as hardware improves, particularly through increases in the number of available cores.&lt;/p&gt;
-
-&lt;h3 id=&#34;google-app-engine-support:3614b4ac0fb81e46a552fe4b0f2199ab&#34;&gt;Google App Engine support&lt;/h3&gt;
-
-&lt;p&gt;At &lt;a href=&#34;https://www.meta.sc&#34;&gt;Meta&lt;/a&gt; we use Google App Engine to host the majority of our infrastructure as I&amp;rsquo;ve &lt;a href=&#34;https://www.meta.sc/tech/startclean/&#34;&gt;blogged about&lt;/a&gt;. We are very much looking forward to the availability of Go 1.5 on App Engine, and is &lt;a href=&#34;https://groups.google.com/forum/#!topic/google-appengine-go/as9wUqT77YU&#34;&gt;planned&lt;/a&gt;, but unfortunately there is &lt;a href=&#34;https://groups.google.com/forum/#!topic/google-appengine-go/Vg5F0sUMTFc&#34;&gt;no definitive date&lt;/a&gt; as of yet. We&amp;rsquo;ll be moving to is as soon as it&amp;rsquo;s available!&lt;/p&gt;
-
-&lt;h3 id=&#34;conclusions:3614b4ac0fb81e46a552fe4b0f2199ab&#34;&gt;Conclusions&lt;/h3&gt;
-
-&lt;p&gt;Go 1.5 solidifies the Go tool chain by moving it to Go and brings performance improvements that increase it&amp;rsquo;s competitiveness with other high-performance languages. There are plenty of other changes that I didn&amp;rsquo;t get a chance to touch on, so be sure to take a look at the full &lt;a href=&#34;https://golang.org/doc/go1.5&#34;&gt;Go 1.5 Release Notes&lt;/a&gt; for other details.&lt;/p&gt;
-
-&lt;h2 id=&#34;references:3614b4ac0fb81e46a552fe4b0f2199ab&#34;&gt;References&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://blog.golang.org/go1.5&#34;&gt;Go 1.5 is released - The Go Blog&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://golang.org/doc/go1.5&#34;&gt;Go 1.5 Release Notes&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.google.com/document/d/16Y4IsnNRCN43Mx0NZc5YXZLovrHvvLhK_h0KN8woTO4/edit#&#34;&gt;Go 1.4+ Garbage Collection (GC) Plan and Roadmap&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.google.com/document/d/1wmjrocXIWTr1JxU-3EQBI6BK6KgtiFArkG47XK73xIQ/edit#&#34;&gt;Go 1.5 concurrent garbage collector pacing&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.google.com/document/d/1At2Ls5_fhJQ59kDK2DFVhFu3g5mATSXqqV5QrxinasI/edit&#34;&gt;Go 1.5 GOMAXPROCS Default&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://talks.golang.org/2015/go-gc.pdf&#34;&gt;GopherCon 2015 - Go GC:Latency Problem Solved&lt;/a&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=aiv1JOfMjm0&#34;&gt;Corresponding talk&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.google.com/document/d/1e8kOo3r51b2BWtTs_1uADIA5djfXhPT36s6eHVRIvaU/edit&#34;&gt;Go 1.4 “Internal” Packages&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.google.com/document/d/1P3BLR31VA8cvLJLfMibSuTdwTuF7WWLux71CYD0eeD8/edit&#34;&gt;Go 1.3+ Compiler Overhaul&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://talks.golang.org/2015/gogo.slide#3&#34;&gt;Go to Go&lt;/a&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=cF1zJYkBW4A&#34;&gt;Corresponding talk&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.google.com/document/d/1Bz5-UB7g2uPBdOx-rw5t9MxJwkfpx90cqG9AFL0JAYo/edit&#34;&gt;Go 1.5 Vendor Experiment&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://blog.golang.org/go15gc&#34;&gt;The Go Blog - Go GC: Prioritizing low latency and simplicity&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
+      <description>With the relatively recent release Go 1.5, there are a variety of interesting areas to look at in regards to what&amp;rsquo;s changed with the language. As one would expect based on both Go&amp;rsquo;s philosophy and it&amp;rsquo;s future compatibility guidelines, not much has changed from a language feature standpoint. Still, there a number of exciting under-the-hood enhancements in the latest release.
+Package system New functionality has been introduced to the packaging system in two ways.</description>
     </item>
     
     <item>
@@ -108,174 +27,7 @@
       <pubDate>Sat, 20 Jun 2015 22:23:41 -0400</pubDate>
       
       <guid>https://ataylor.io/blog/cgolinking/</guid>
-      <description>
-
-&lt;p&gt;These days, I spend a lot of time working with, designing, and implementing APIs. Since &lt;a href=&#34;https://meta.sc&#34;&gt;Meta&lt;/a&gt; is a microservices based application, the contracts that those APIs provide are crucial to designing the interactions with them. Quickly, maintaining good documentation and client libraries becomes nearly as important of a part of the applications as the code itself. Each step forward in functionality must provide solid footing to keep on building.&lt;/p&gt;
-
-&lt;p&gt;A spectacular tool that we have been using is &lt;a href=&#34;https://apiary.io&#34;&gt;Apiary&lt;/a&gt;, a service that provides API documentation through a super set of markdown that is fully parsable, providing mocked APIs and examples through a single set of documentation. The format of this markdown documentation is &lt;a href=&#34;https://apiblueprint.org&#34;&gt;API Blueprint&lt;/a&gt; format, for which the documentation and a rich set of parsing libraries and tooling has been released under the MIT license.&lt;/p&gt;
-
-&lt;h3 id=&#34;a-confluence-of-interests:f0f98a633f4540118f1ad2a10a32d79e&#34;&gt;A Confluence of Interests&lt;/h3&gt;
-
-&lt;p&gt;The core parsing library for the API BLueprint format is called &lt;a href=&#34;https://github.com/apiaryio/snowcrash&#34;&gt;Snow Crash&lt;/a&gt; and is written in C++. Built on top of this library is a tool called &lt;a href=&#34;https://github.com/apiaryio/drafter&#34;&gt;Drafter&lt;/a&gt;, also a C++ library, which provides a cleaner interface to interact with the primary purpose of Snow Crash, parsing human readable markdown into json.&lt;/p&gt;
-
-&lt;p&gt;There are two client libraries currently available for drafter. &lt;a href=&#34;https://github.com/apiaryio/protagonist&#34;&gt;Protagonist&lt;/a&gt; is written in Node.js, and &lt;a href=&#34;https://github.com/apiaryio/redsnow&#34;&gt;RedSnow&lt;/a&gt; is written in Ruby. I mostly am writing Go these days, so this seemed like a great opportunity to add a Go client library for the core Snow Crash parsing library.&lt;/p&gt;
-
-&lt;p&gt;Since the core library is written in C++, this means that it would also be a chance to work with &lt;a href=&#34;http://golang.org/cmd/cgo/&#34;&gt;cgo&lt;/a&gt;, the Go language&amp;rsquo;s too to interact with C code. This is something that&amp;rsquo;s been on my want-to-do list for a while, but this seemed like the perfect opportunity to dive in.&lt;/p&gt;
-
-&lt;h2 id=&#34;experimenting-with-cgo:f0f98a633f4540118f1ad2a10a32d79e&#34;&gt;Experimenting with cgo&lt;/h2&gt;
-
-&lt;p&gt;The Go blog has a great post to get started with C and Go called &lt;a href=&#34;http://blog.golang.org/c-go-cgo&#34;&gt;C? Go? Cgo!&lt;/a&gt; that I used to get initially up and running.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;package main
-
-/*
-#include &amp;lt;stdlib.h&amp;gt;
-*/
-import &amp;quot;C&amp;quot;
-import (
-    &amp;quot;fmt&amp;quot;
-    &amp;quot;time&amp;quot;
-)
-
-func Random() int {
-    return int(C.random())
-}
-
-func Seed(i int) {
-    C.srandom(C.uint(i))
-}
-
-func main() {
-    fmt.Printf(&amp;quot;Deterministic random: %v\n&amp;quot;, Random())
-    Seed(int(time.Now().Unix()))
-    fmt.Printf(&amp;quot;Seeded random: %v\n&amp;quot;, Random())
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;remembering-c:f0f98a633f4540118f1ad2a10a32d79e&#34;&gt;Remembering C&lt;/h2&gt;
-
-&lt;p&gt;The existing wrapper libraries use the Drafter source as a git submodule which is compiled into a shared library for use by the wrapper. Most of my experience with C/C++ is either with simple projects in a single folder with only standard library dependencies, or from within an IDE that handles most of the complexities of compilation for you. Since there would be a bigger manual component to this project, creating a simple proof of concept interface written in C seemed like a prudent first step.&lt;/p&gt;
-
-&lt;p&gt;I would be wrapping the &lt;a href=&#34;https://github.com/apiaryio/drafter/blob/master/README.md#c-interface&#34;&gt;C-Interface&lt;/a&gt; described in the project&amp;rsquo;s README file, so getting the example code up and running seemed to be a good start.&lt;/p&gt;
-
-&lt;h4 id=&#34;drafter-c-based-test-code:f0f98a633f4540118f1ad2a10a32d79e&#34;&gt;Drafter C-based test code&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-c&#34;&gt;#include &amp;lt;stdio.h&amp;gt;
-#include &amp;lt;stdlib.h&amp;gt;
-#include &amp;quot;cdrafter.h&amp;quot;
-
-int main(int argc, char const *argv[])
-{
-    const char* source = &amp;quot;# My API\n## GET /message\n + Response 200 (text/plain)\n\n        Hello World\n&amp;quot;;
-    char *result = NULL;
-    int ret = drafter_c_parse(source, 0, &amp;amp;result);
-
-    printf(&amp;quot;Result: %s\n&amp;quot;, ret == 0 ? &amp;quot;OK&amp;quot; : &amp;quot;ERROR&amp;quot;);
-    printf(&amp;quot;Serialized JSON result:\n%s\n&amp;quot;, result);
-
-    free(result); /* we MUST release allocted memory for result */
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;We&amp;rsquo;ll be doing a two step compilation process here to allow for proper linking between the C code and the shared library. With the above code snippet in a file called &lt;code&gt;ctest.c&lt;/code&gt;, we can compile that into an object file using the following command:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;gcc -Wall -c ctest.c -I./drafter/src/ -I./drafter/ext/snowcrash/src/
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The &lt;code&gt;-I&lt;/code&gt; flags add the specified directory to the include search path, allowing for the &lt;code&gt;cdrafter.h&lt;/code&gt; file and the headers which it contains to be used in creating the object file.&lt;/p&gt;
-
-&lt;p&gt;After this command is executed, we end up with a file called &lt;code&gt;ctest.o&lt;/code&gt;, which is the object file for the c code above. This &lt;code&gt;.o&lt;/code&gt; file needs to be again compiled in order to properly link it to the dynamic library for drafter. This is the tricky part. A big help to me here was looking at the how the RedSnow library sets up ruby&amp;rsquo;s FFI module to interact with Drafter&amp;rsquo;s C interface.&lt;/p&gt;
-
-&lt;h3 id=&#34;detour-into-ruby:f0f98a633f4540118f1ad2a10a32d79e&#34;&gt;Detour into Ruby&lt;/h3&gt;
-
-&lt;p&gt;From looking at &lt;a href=&#34;https://github.com/apiaryio/redsnow/blob/master/lib/redsnow/binding.rb&#34;&gt;binding&lt;/a&gt; file for the RedSnow library, two things became clear. First, there were platform dependent aspects of this compilation process. These will be especially important in setting up CI for my library later on. The other element present here was that the dynamic library itself was not created by the build process described in Drafter&amp;rsquo;s README. looking at the &lt;a href=&#34;https://github.com/apiaryio/redsnow/blob/master/Rakefile&#34;&gt;&lt;code&gt;Rakefile&lt;/code&gt;&lt;/a&gt; for RedSnow, I found a special configuration option which prompted the creation of a shared library, a &lt;code&gt;--shared&lt;/code&gt; flag on the build configuration for Drafter.&lt;/p&gt;
-
-&lt;p&gt;Still, there were a few more uncertainties. Being unfamiliar with the specifics of dynamic library compilation, there were a few interactions with Ruby&amp;rsquo;s FFI library that I wanted to understand more. So, taking inspiration from Go&amp;rsquo;s best practice of reading the source code, I dived into the &lt;a href=&#34;https://github.com/ffi/ffi&#34;&gt;FFI source&lt;/a&gt;. The &lt;a href=&#34;https://github.com/ffi/ffi/blob/master/lib/ffi/platform.rb&#34;&gt;&lt;code&gt;lib/ffi/platform.rb&lt;/code&gt;&lt;/a&gt; file contained most of what I was looking for. The definition of &lt;code&gt;LIBSUFFIX&lt;/code&gt; and the way that platform tests were handled would be very useful later on. For now, I was that Mac dynamic libraries have a &lt;code&gt;.dylib&lt;/code&gt; extension. That and the compilation configuration were just what I needed.&lt;/p&gt;
-
-&lt;h3 id=&#34;back-to-c:f0f98a633f4540118f1ad2a10a32d79e&#34;&gt;Back to C&lt;/h3&gt;
-
-&lt;p&gt;Armed with this knowledge of how the Ruby wrapper library handled setting up the C bindings, I hashed through getting my simple C example working.&lt;/p&gt;
-
-&lt;p&gt;The next step was to compile the shared library for Drafter. Using the &lt;code&gt;./configure --shared&lt;/code&gt; and &lt;code&gt;make&lt;/code&gt; commands that drafter comes with. Behind the scenes, Drafter and its dependencies use the &lt;a href=&#34;https://code.google.com/p/gyp/&#34;&gt;GYP&lt;/a&gt; build system to configure their compilation process. On Mac, that build process creates a &lt;code&gt;libdrafter.dylib&lt;/code&gt; file.&lt;/p&gt;
-
-&lt;p&gt;Specifying the location of this file requires custom flags for the compiler command. With a bit of searching I was able to find the &lt;code&gt;-L&lt;/code&gt; flag, which, similarly to the &lt;code&gt;-I&lt;/code&gt; flag, specifies a search directory for the compilation process as a whole. By specifying both Drafter&amp;rsquo;s build directory and dynamic library itself, we had a compiling C program!&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;gcc ctest.o -L./drafter/build/out/Release/ -ldrafter -o ctest
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Unfortunately, a compiling C program doesn&amp;rsquo;t always mean a running C program. I was getting an error of the form:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;./ctest
-dyld: Library not loaded: /usr/local/lib/libdrafter.dylib
-  Referenced from: /Users/ataylor/go/src/github.com/kujenga/gosnow/./ctest
-  Reason: image not found
-make: *** [test] Trace/BPT trap: 5
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;After looking into the usage of &lt;code&gt;-rpath&lt;/code&gt; or &lt;code&gt;@rpath&lt;/code&gt;, which allows for the specification of runtime search paths within the binary, without much success, the simplest option that I came across was to put a soft link from the location of the custom compiled dynamic library for Drafter to the global system library location, &lt;code&gt;/usr/local/lib/&lt;/code&gt; on Mac, effectively installing this library on my computer.&lt;/p&gt;
-
-&lt;p&gt;Finally, it worked! I just about jumped for joy. After hours of tweaks and research, I was calling into a custom compiled dynamic library, something I hadn&amp;rsquo;t a clue about just a day earlier.&lt;/p&gt;
-
-&lt;h2 id=&#34;translating-to-go:f0f98a633f4540118f1ad2a10a32d79e&#34;&gt;Translating to Go&lt;/h2&gt;
-
-&lt;p&gt;After successfully creating a C version of the basic functionality that I wanted to implement, and with a basic understanding of Go&amp;rsquo;s interop with C, I started porting the example code to a Go version with the same functionality.&lt;/p&gt;
-
-&lt;p&gt;The &lt;a href=&#34;https://golang.org/cmd/cgo/&#34;&gt;cgo documentation&lt;/a&gt; specified a variety of pseudo directives that can be used for customizing the behavior of GCC as executed by Go. The two most relevant seemed to be &lt;code&gt;CFLAGS&lt;/code&gt;, for the initial compilation of the C code, and &lt;code&gt;LDFLAGS&lt;/code&gt;, for linking libraries with the compiled code.&lt;/p&gt;
-
-&lt;p&gt;I simply copied the options for the first compilation step for the C program as the value for &lt;code&gt;CFLAGS&lt;/code&gt;, and for options for the second compilation step as the value for &lt;code&gt;LDFLAGS&lt;/code&gt;, and to my great delight, it worked! The jump from C to Go had been the easiest part so far.&lt;/p&gt;
-
-&lt;h3 id=&#34;writing-tests:f0f98a633f4540118f1ad2a10a32d79e&#34;&gt;Writing Tests&lt;/h3&gt;
-
-&lt;p&gt;I got the code up and running as a single file using the command &lt;code&gt;go run main.go&lt;/code&gt;, treating it as a single file. Since my goal was to have this be a wrapper library, my next logical step was to convert this into a package with some tests! Unfortunately, this change introduced another error.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;duplicate symbol _main in:
-    $WORK/github.com/kujenga/gosnow/_test/_obj_test/_cgo_main.o
-    $WORK/github.com/kujenga/gosnow/_test/_obj_test/ctest.o
-ld: 1 duplicate symbol for architecture x86_64
-clang: error: linker command failed with exit code 1 (use -v to see invocation)
-FAIL    github.com/kujenga/gosnow [build failed]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The issue here was that after changing the go code to be a package, the Go compiler was treating my unrelated C test program as part of the package, and since Go creates its own &lt;code&gt;main&lt;/code&gt; method in tests, there was a duplicate main method. Moving the C file to a subdirectory got things back up and running.&lt;/p&gt;
-
-&lt;h2 id=&#34;continuous-integration:f0f98a633f4540118f1ad2a10a32d79e&#34;&gt;Continuous Integration&lt;/h2&gt;
-
-&lt;p&gt;These days, it seems like any open source library or project worth its salt has a continuous integration setup and test coverage metrics proudly displayed at the top of its README file. This would require building the project on a Linux machine in the cloud. As I saw while digging into Ruby&amp;rsquo;s FFI source code, there are a number of things to be aware of when compiling on Linux. I&amp;rsquo;m punting on Windows support for now, although theoretically it wouldn&amp;rsquo;t be too difficult.&lt;/p&gt;
-
-&lt;p&gt;There are two differences in the compilation of the Drafter library to be aware of. The first is in the location of the compiled result. On Linux, it is a directory below where it is on Mac in a &lt;code&gt;lib.target/&lt;/code&gt; folder. Secondly, it has an extension of &lt;code&gt;.so&lt;/code&gt; rather than &lt;code&gt;.dylib&lt;/code&gt;. Taking these into account, I was still having trouble providing the library to the Go code at runtime. The package could not be installed without the use of &lt;code&gt;sudo&lt;/code&gt; in the CI configuration, which seemed like an ugly fix.&lt;/p&gt;
-
-&lt;p&gt;After experimenting manually on a Linux server, I found that the &lt;code&gt;LD_LIBRARY_PATH&lt;/code&gt; environment variable, which I had run into earlier in my research but was unhelpful on the Mac, solved my problem quite nicely. By specifying the proper path as an environment variable in the CI setup, I was able to get a working build on &lt;a href=&#34;https://travis-ci.org/kujenga/gosnow&#34;&gt;Travis-CI&lt;/a&gt;. To monitor test coverage of the library, I setup the Travis build to send reports to &lt;a href=&#34;https://coveralls.io/r/kujenga/gosnow&#34;&gt;Coveralls&lt;/a&gt; using the &lt;a href=&#34;https://github.com/mattn/goveralls&#34;&gt;goveralls&lt;/a&gt; library. With a link to the &lt;a href=&#34;https://godoc.org/github.com/kujenga/gosnow&#34;&gt;godoc&lt;/a&gt; for this project, things were looking good!&lt;/p&gt;
-
-&lt;h2 id=&#34;implementation:f0f98a633f4540118f1ad2a10a32d79e&#34;&gt;Implementation&lt;/h2&gt;
-
-&lt;p&gt;With the example code working, I began implementing functionality similar to that provided by the Ruby library, with structured, parsed versions of the JSON output from Drafter nicely formatted into Go structs. It&amp;rsquo;s a rather complex data structure to represent, but I was able to replicate the elements of the abstract syntax tree, defined in the &lt;a href=&#34;https://github.com/apiaryio/snowcrash/blob/master/src/Blueprint.h&#34;&gt;&lt;code&gt;Blueprint.h&lt;/code&gt;&lt;/a&gt; file within the Snow Crash library. My version was mostly a port of what is present in the RedSnow library currently. Still remaining is the task of providing struct-based representation of the sourcemap format, as specified in the &lt;a href=&#34;https://github.com/apiaryio/snowcrash/blob/master/src/BlueprintSourcemap.h&#34;&gt;&lt;code&gt;BlueprintSourcemap.h&lt;/code&gt;&lt;/a&gt; file in the Snow Crash repository. I also wrote a series of tests utilizing the [fixtures]() from RedSnow as well as some of my own. I still have some work to do to ensure that there is complete parity between the structs I created and the syntax specification itself, but at the very least the code runs without errors.&lt;/p&gt;
-
-&lt;h3 id=&#34;improvements:f0f98a633f4540118f1ad2a10a32d79e&#34;&gt;Improvements&lt;/h3&gt;
-
-&lt;p&gt;There are a few things which could be improved about the installation and function of this library. Firstly, to encapsulate the behavior necessary to install this library, I created a makefile with the appropriate options for the various build environments that the code would be running in. Go is trying to move away from tooling that isn&amp;rsquo;t endogenous to Go itself, so a better solution here is desired.&lt;/p&gt;
-
-&lt;p&gt;Additionally, in order to get cgo to compile properly for both Mac and the Linux CI server, I added both possible directories to the flags specified in my Go code. This works, but causes warnings at compile time which I would like to eliminate.&lt;/p&gt;
-
-&lt;p&gt;At its core, the frustration here is that the &lt;code&gt;go get&lt;/code&gt; command, which generally provides a universal way to simply install a go library, does not accomplish what we want in this case. The best option here is to use the &lt;a href=&#34;http://www.freedesktop.org/wiki/Software/pkg-config/&#34;&gt;pkg-config&lt;/a&gt; specification to enumerate what must occur to install this library. This &lt;a href=&#34;http://www.goinggo.net/2013/08/using-cgo-with-pkg-config-and-custom.html&#34;&gt;blog post&lt;/a&gt; has a great example of doing just that which I plan to pursue in the future.&lt;/p&gt;
-
-&lt;p&gt;One concession that would have to be made in order to make this library &amp;ldquo;go gettable&amp;rdquo; is to vendor the Drafter library within the repository itself. As is documented by &lt;a href=&#34;https://github.com/golang/go/issues/7764&#34;&gt;Golang issue 7764&lt;/a&gt;, git submodules, which I am currently using to keep track of Drafter, are not automatically retrieved by the &lt;code&gt;go get&lt;/code&gt; tool, and it is uncertain whether they ever will be. I&amp;rsquo;ll be keeping an eye on that issue.&lt;/p&gt;
-
-&lt;h3 id=&#34;future-work:f0f98a633f4540118f1ad2a10a32d79e&#34;&gt;Future Work&lt;/h3&gt;
-
-&lt;p&gt;I touched briefly on how defining APIs is crucial to my work at &lt;a href=&#34;https://meta.sc&#34;&gt;Meta&lt;/a&gt;. My eventual goal with this library is to build off of it to use out existing documentation for our APIs to generate arbitrary other forms of output, including client libraries for our APIs, mock interfaces for testing our micro services, and even things like &lt;a href=&#34;https://www.getpostman.com&#34;&gt;Postman&lt;/a&gt; collections, all from a single API definition. Doing this through Go&amp;rsquo;s built in &lt;a href=&#34;http://blog.golang.org/generate&#34;&gt;code generation&lt;/a&gt; functionality is my next goal, and will likely be the topic of a future blog post.&lt;/p&gt;
-
-&lt;h3 id=&#34;the-code:f0f98a633f4540118f1ad2a10a32d79e&#34;&gt;The Code&lt;/h3&gt;
-
-&lt;p&gt;My code is up on Github at &lt;a href=&#34;https://github.com/kujenga/gosnow&#34;&gt;github.com/kujenga/gosnow&lt;/a&gt;. Check out the &lt;a href=&#34;https://godoc.org/github.com/kujenga/gosnow&#34;&gt;godoc&lt;/a&gt; for information on using the library. Like Drafter and most of the code underneath is, gosnow is MIT Licensed.&lt;/p&gt;
-
-&lt;h3 id=&#34;references:f0f98a633f4540118f1ad2a10a32d79e&#34;&gt;References&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://blog.golang.org/c-go-cgo&#34;&gt;The Go Blog - C? Go? Cgo!&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.goinggo.net/2013/08/using-c-dynamic-libraries-in-go-programs.html&#34;&gt;Going Go - Using C Dynamic Libraries In Go Programs&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.goinggo.net/2013/08/using-cgo-with-pkg-config-and-custom.html&#34;&gt;Going Go - Using CGO with Pkg-Config And Custom Dynamic Library Locations&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
+      <description>These days, I spend a lot of time working with, designing, and implementing APIs. Since Meta is a microservices based application, the contracts that those APIs provide are crucial to designing the interactions with them. Quickly, maintaining good documentation and client libraries becomes nearly as important of a part of the applications as the code itself. Each step forward in functionality must provide solid footing to keep on building.</description>
     </item>
     
     <item>
@@ -284,12 +36,7 @@ FAIL    github.com/kujenga/gosnow [build failed]
       <pubDate>Wed, 17 Jun 2015 01:04:26 -0400</pubDate>
       
       <guid>https://ataylor.io/blog/blogging/</guid>
-      <description>&lt;p&gt;My &lt;a href=&#34;https://ataylor.io/old.html&#34;&gt;previous site&lt;/a&gt; was written completely from scratch. It gave me a valuable understanding of web fundamentals, but as my time grows short, I needed something with a little more tooling built in. Still, I wanted tools that I could understand. After working extensively with &lt;a href=&#34;https://golang.org&#34;&gt;Go&lt;/a&gt; in my work at &lt;a href=&#34;https://meta.sc&#34;&gt;Meta&lt;/a&gt;, I felt I had a good enough understanding of its templating system to commit to using it as a the building blocks for my own website. &lt;a href=&#34;http://gohugo.io&#34;&gt;Hugo&lt;/a&gt; seemed a great candidate to build my site off of, and it would be a great test run for what would eventually become the foundation of &lt;a href=&#34;https://github.com/rastech/website&#34;&gt;Meta&amp;rsquo;s &amp;ldquo;new&amp;rdquo; website&lt;/a&gt;, at least in the backend generation.&lt;/p&gt;
-
-&lt;p&gt;So, I cobbled this together using bootstrap and some other bits and pieces from around the web. Since it&amp;rsquo;s a static site and will be hosted on &lt;a href=&#34;https://pages.github.com&#34;&gt;Github Pages&lt;/a&gt;, comments need to be handled externally. I&amp;rsquo;m working on getting comments up and running using &lt;a href=&#34;http://www.discourse.org&#34;&gt;Discourse&lt;/a&gt; on my Digital Ocean droplet, but after running into some roadblocks getting that up and running, for now I&amp;rsquo;ll somewhat begrudgingly be using &lt;a href=&#34;https://disqus.com&#34;&gt;Disqus&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;I plan on posting new and potentially retrospective content on here as my increasingly scarce time allows me to explore things on the side. Hope you enjoy!&lt;/p&gt;
-</description>
+      <description>My previous site was written completely from scratch. It gave me a valuable understanding of web fundamentals, but as my time grows short, I needed something with a little more tooling built in. Still, I wanted tools that I could understand. After working extensively with Go in my work at Meta, I felt I had a good enough understanding of its templating system to commit to using it as a the building blocks for my own website.</description>
     </item>
     
     <item>
@@ -298,10 +45,7 @@ FAIL    github.com/kujenga/gosnow [build failed]
       <pubDate>Tue, 16 Jun 2015 23:12:19 -0400</pubDate>
       
       <guid>https://ataylor.io/proj/gokart/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;https://ataylor.io/img/proj/gokart_wide.jpg&#34; alt=&#34;Go kart in action&#34; width=&#34;800&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;Hand-fabricated a full-suspension metal frame from raw of steel tubing. Designed the electronics system for the power train, used CAD software to design the motor and control board mounts and drivetrain assembly and create custom fabricated parts.&lt;/p&gt;
-</description>
+      <description>Hand-fabricated a full-suspension metal frame from raw of steel tubing. Designed the electronics system for the power train, used CAD software to design the motor and control board mounts and drivetrain assembly and create custom fabricated parts.</description>
     </item>
     
     <item>
@@ -310,10 +54,7 @@ FAIL    github.com/kujenga/gosnow [build failed]
       <pubDate>Tue, 16 Jun 2015 23:11:40 -0400</pubDate>
       
       <guid>https://ataylor.io/proj/p2pmkt/</guid>
-      <description>&lt;p&gt;During the spring of my sophomore year at Williams College I took a project-based distributed systems course. Over the course of the semester in partner projects I worked on server from scratch written in C using a queue-based model to handle requests in a highly resilient manner, a multi-server e-commerce system with an iOS client communicating over XML-RPC, and set up a Hadoop cluster to analyze advertising data, correlating customers to impressions.&lt;/p&gt;
-
-&lt;p&gt;For the final project in the class,&lt;/p&gt;
-</description>
+      <description>During the spring of my sophomore year at Williams College I took a project-based distributed systems course. Over the course of the semester in partner projects I worked on server from scratch written in C using a queue-based model to handle requests in a highly resilient manner, a multi-server e-commerce system with an iOS client communicating over XML-RPC, and set up a Hadoop cluster to analyze advertising data, correlating customers to impressions.</description>
     </item>
     
     <item>
@@ -322,75 +63,8 @@ FAIL    github.com/kujenga/gosnow [build failed]
       <pubDate>Tue, 16 Jun 2015 22:59:46 -0400</pubDate>
       
       <guid>https://ataylor.io/about/</guid>
-      <description>
-
-&lt;p&gt;I am a full-stack developer with a track record of delivering on ambitious projects in both a professional and academic setting. At Meta, I am leading the development of a scalable and modern cloud architecture as we build out a powerful and experienced &lt;a href=&#34;https://meta.sc/careers&#34;&gt;team&lt;/a&gt;. As a Co-Founder of Peck, I lead a team of developers in the development of a mobile application and web service. I aspire to maintain a holistic vision for a product while managing and participating in the development process. I have experience with a wide variety of technologies that provide me with a strong basis for designing and developing computer systems. I have studied Computer Science at Williams College and the Aquincum Institute of Technology, and am currently taking time off from school to work on Meta in Boston.&lt;/p&gt;
-
-&lt;h2 id=&#34;experience:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Experience&lt;/h2&gt;
-
-&lt;h3 id=&#34;co-founder-and-cto-meta-https-meta-sc:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Co-Founder and CTO, &lt;a href=&#34;https://meta.sc&#34;&gt;Meta&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h4 id=&#34;january-2015-present:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;January 2015 - present&lt;/h4&gt;
-
-&lt;p&gt;Developing a cloud platform that brings the power of a search engine to a user&amp;rsquo;s own files. Architecting a service-based backend to provide a single user experience for file search and organization. It analyzes files with a similar intent to how a search engine would analyze the web, providing SmartTags based on found concepts and ideas.&lt;/p&gt;
-
-&lt;h3 id=&#34;head-developer-and-co-founder-peck-https-itunes-apple-com-tr-app-peck-social-calendaring-event-id912464190:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Head Developer and Co-Founder, &lt;a href=&#34;https://itunes.apple.com/tr/app/peck-social-calendaring-event/id912464190&#34;&gt;Peck&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h4 id=&#34;fall-2013-january-2015:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Fall 2013 - January 2015&lt;/h4&gt;
-
-&lt;p&gt;Won the annual Williams College Business Plan Competition and hired a team of 5 to work out of &lt;a href=&#34;http://www.leverinc.org&#34;&gt;Lever&lt;/a&gt;. Lead development of a mobile app for iOS and Android with Ruby on Rails backend. Now live on the iOS App Store. Peck is a social calendaring service for college students providing information and event-based communication.&lt;/p&gt;
-
-&lt;h3 id=&#34;winter-intern-new-signature-https-newsignature-com:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Winter Intern, &lt;a href=&#34;https://newsignature.com&#34;&gt;New Signature&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h4 id=&#34;january-2014:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;January 2014&lt;/h4&gt;
-
-&lt;p&gt;Designed a system for knowledge management and intellectual property creation for diagnostic, configurational, and procedural toolsets with goals of internal efficiency and expanded services in the field of IT consulting.&lt;/p&gt;
-
-&lt;h3 id=&#34;filmmaker-berkshire-productions-http-berkshireproductions-com:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Filmmaker, &lt;a href=&#34;http://berkshireproductions.com/&#34;&gt;Berkshire Productions&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h4 id=&#34;2007-2014:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;2007-2014&lt;/h4&gt;
-
-&lt;p&gt;Founded a filmmaking and videography business with more than 160 jobs for over 40 clients, learning about marketing and content creation, and a wide variety of cinema technologies, hardware, and software.&lt;/p&gt;
-
-&lt;h3 id=&#34;iphone-app-development-williams-college-computer-science-department:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;iPhone app development, Williams College Computer Science Department&lt;/h3&gt;
-
-&lt;h4 id=&#34;spring-2013-present:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Spring 2013 - present&lt;/h4&gt;
-
-&lt;p&gt;Created an app, &lt;a href=&#34;https://itunes.apple.com/us/app/hungryeph/id440288933&#34;&gt;HungryEph&lt;/a&gt;, to provide a simpler and more intuitive interface for daily and late night snack bar menus that uses data scraped from the existing online dining resources. Currently in use by Williams students.&lt;/p&gt;
-
-&lt;h2 id=&#34;projects:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Projects&lt;/h2&gt;
-
-&lt;h3 id=&#34;compiling-interpreter-for-x86-machine-code-written-in-arm-assembly-language:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Compiling Interpreter for x86 machine code written in ARM assembly language&lt;/h3&gt;
-
-&lt;p&gt;Created the fastest interpreter in my Computer Architecture class by compiling translated instructions of the x86 instruction set into mapped sequences of ARM instructions allowing for much faster runtimes than a standard interpreter.&lt;/p&gt;
-
-&lt;h3 id=&#34;replicated-hosting-within-a-p2p-marketplace:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Replicated Hosting within a P2P Marketplace&lt;/h3&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/kujenga/OpenBazaar&#34;&gt;Forked&lt;/a&gt; the &lt;a href=&#34;https://github.com/OpenBazaar/OpenBazaar&#34;&gt;OpenBazaar&lt;/a&gt; project in its earliest stages to emulate a hosted site environment within a P2P network. Used a &lt;a href=&#34;http://xlattice.sourceforge.net/components/protocol/kademlia/specs.html&#34;&gt;Kademlia&lt;/a&gt; distributed hash table to facilitate replicated storage of a user’s site across multiple peers.&lt;/p&gt;
-
-&lt;h3 id=&#34;electric-powered-off-road-vehicle:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Electric Powered Off-Road Vehicle&lt;/h3&gt;
-
-&lt;p&gt;Hand-fabricated a full-suspension metal frame from raw steel tubing. Designed the power train electronics system, used CAD software to design and fabricate control board, motor mount, and drive train assembly.&lt;/p&gt;
-
-&lt;h2 id=&#34;education:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Education&lt;/h2&gt;
-
-&lt;h3 id=&#34;williams-college-https-www-google-com-webhp-hl-en-hl-en-q-williams-college-2016:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;&lt;a href=&#34;https://www.google.com/webhp?hl=en#hl=en&amp;amp;q=Williams+College&#34;&gt;Williams College&lt;/a&gt; 2016&amp;rsquo;&lt;/h3&gt;
-
-&lt;h4 id=&#34;majoring-in-computer-science:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Majoring in Computer Science&lt;/h4&gt;
-
-&lt;p&gt;&lt;strong&gt;Selected Coursework:&lt;/strong&gt; Distributed Systems, Data Mining, Computer Architecture, Principles of Programming Languages, Mobile App Development, Intro to Cryptography, Computer Graphics, Computer Vision&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;TA:&lt;/strong&gt; Principles of Programming Languages (Spring 2015), Intro to Computer Science (Fall 2013, Spring 2014)&lt;/p&gt;
-
-&lt;h4 id=&#34;skills:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Skills&lt;/h4&gt;
-
-&lt;p&gt;&lt;strong&gt;Computer Science:&lt;/strong&gt; Objective-C, Swift, Ruby, Java, C/C++, Python, Bash, Assembly Language, Distributed Systems, iOS Development, Relational Databases&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Other Interests:&lt;/strong&gt; Metalworking and Fabrication, Woodworking, Piano (15 years), Williams Cycling Club, Williams Sailing Team, Williams Nordic Ski Club, Hiking, Film&lt;/p&gt;
-
-&lt;script src=&#34;//platform.linkedin.com/in.js&#34; type=&#34;text/javascript&#34;&gt;&lt;/script&gt;
-&lt;script type=&#34;IN/MemberProfile&#34; data-id=&#34;https://www.linkedin.com/in/ataylor0123&#34; data-format=&#34;inline&#34;&gt;&lt;/script&gt;
-</description>
+      <description>I am an entrepreneur, computer scientist, and full-stack software engineer with a track record of delivering on ambitious projects. At Diffeo I&amp;rsquo;m building search and discovery tools to uncover the hidden connections in the world&amp;rsquo;s information. Meta was acquired by Diffeo in late 2016. There, I led the development of a scalable cloud architecture as we built a brand new search experience.
+Experience Co-Founder and Director of Cloud Services, Diffeo September 2016 - present Building search and discovery tools that use collaborative machine intelligence to solve the challenges of disparate data.</description>
     </item>
     
     <item>
@@ -399,8 +73,7 @@ FAIL    github.com/kujenga/gosnow [build failed]
       <pubDate>Tue, 16 Jun 2015 22:57:32 -0400</pubDate>
       
       <guid>https://ataylor.io/proj/x86toarm/</guid>
-      <description>&lt;p&gt;Created the fastest assembly language interpreter in my Computer Architecture class for large programs by compiling instructions read commands of the x86 instruction set into mappes sequences of ARM instructions which allowed loops to be executed much faster than if they had to be interpreted every time.&lt;/p&gt;
-</description>
+      <description>Created the fastest assembly language interpreter in my Computer Architecture class for large programs by compiling instructions read commands of the x86 instruction set into mappes sequences of ARM instructions which allowed loops to be executed much faster than if they had to be interpreted every time.</description>
     </item>
     
   </channel>

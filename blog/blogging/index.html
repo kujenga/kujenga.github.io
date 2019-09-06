@@ -6,8 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="I guess I have a blog now">
     <meta name="author" content="Aaron Taylor">
+
+    <meta name="google-site-verification" content="tiuapB3N9vmYdU9_nwX6t_iHEqjDsOaSi8sRQ_CppY4" />
+
     <link rel="icon" href="../../favicon.ico">
     <link rel="canonical" href="https://ataylor.io/blog/blogging/">
+
     
 
     <title>Aaron Taylor - A Website</title>
@@ -17,25 +21,29 @@ window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){va
 ;NREUM.info={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",licenseKey:"ce48477ed0",applicationID:"7067223",sa:1,agent:"js-agent.newrelic.com/nr-632.min.js"}
 </script>
     
-    
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-56787812-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
 
-      ga('create', 'UA-56787812-1', 'auto');
-      ga('send', 'pageview');
-    </script>
 
     
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-<link href='http://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
 
 
-<link type="text/css" rel="stylesheet" href="https://ataylor.io/css/styles.css"/>
+<link type="text/css" rel="stylesheet" href="/css/styles.css"/>
+
 
 
 
@@ -55,9 +63,9 @@ window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){va
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li><a href="https://ataylor.io/blog">Blog</a></li>
+        <li><a href="/blog">Blog</a></li>
         
-        <li><a href="https://ataylor.io/about">About</a></li>
+        <li><a href="/about">About</a></li>
       </ul>
     </div>
   </div>
@@ -68,7 +76,7 @@ window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){va
             <div id="blog-post" class="">
                     <h1>A Website<br> <small>I guess I have a blog now</small></h1>
                     <hr>
-                    <p>My <a href="https://ataylor.io/old.html">previous site</a> was written completely from scratch. It gave me a valuable understanding of web fundamentals, but as my time grows short, I needed something with a little more tooling built in. Still, I wanted tools that I could understand. After working extensively with <a href="https://golang.org">Go</a> in my work at <a href="https://meta.sc">Meta</a>, I felt I had a good enough understanding of its templating system to commit to using it as a the building blocks for my own website. <a href="http://gohugo.io">Hugo</a> seemed a great candidate to build my site off of, and it would be a great test run for what would eventually become the foundation of <a href="https://github.com/rastech/website">Meta&rsquo;s &ldquo;new&rdquo; website</a>, at least in the backend generation.</p>
+                    <p>My <a href="/old.html">previous site</a> was written completely from scratch. It gave me a valuable understanding of web fundamentals, but as my time grows short, I needed something with a little more tooling built in. Still, I wanted tools that I could understand. After working extensively with <a href="https://golang.org">Go</a> in my work at <a href="https://meta.sc">Meta</a>, I felt I had a good enough understanding of its templating system to commit to using it as a the building blocks for my own website. <a href="http://gohugo.io">Hugo</a> seemed a great candidate to build my site off of, and it would be a great test run for what would eventually become the foundation of <a href="https://github.com/rastech/website">Meta&rsquo;s &ldquo;new&rdquo; website</a>, at least in the backend generation.</p>
 
 <p>So, I cobbled this together using bootstrap and some other bits and pieces from around the web. Since it&rsquo;s a static site and will be hosted on <a href="https://pages.github.com">Github Pages</a>, comments need to be handled externally. I&rsquo;m working on getting comments up and running using <a href="http://www.discourse.org">Discourse</a> on my Digital Ocean droplet, but after running into some roadblocks getting that up and running, for now I&rsquo;ll somewhat begrudgingly be using <a href="https://disqus.com">Disqus</a>.</p>
 
@@ -112,9 +120,11 @@ window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){va
             <h4>Other Posts</h4>
             <ul>
             
-                <li><a href="https://meta.sc/tech/swiftobjc" title="Facilitating Idiomatic Swift with Objective-C" target=newtab>Facilitating Idiomatic Swift with Objective-C</a></li>
+                <li><a href="https://www.meta.sc/tech/govendoring/" title="Vendoring Dependencies in Go" target=newtab>Vendoring Dependencies in Go</a></li>
             
                 <li><a href="https://meta.sc/tech/startclean" title="Starting Clean" target=newtab>Starting Clean</a></li>
+            
+                <li><a href="https://meta.sc/tech/swiftobjc" title="Facilitating Idiomatic Swift with Objective-C" target=newtab>Facilitating Idiomatic Swift with Objective-C</a></li>
             
             </ul>
         </div>
@@ -150,13 +160,16 @@ window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){va
             <a href="https://github.com/kujenga" class="btn-social btn-outline" target=newtab><i class="fa fa-fw fa-github"></i></a>
         </li>
         <li>
-            <a href="https://angel.co/aaron-taylor-1" class="btn-social btn-outline" target=newtab><i class="fa fa-fw fa-angellist"></i></a>
+            <a href="https://angel.co/ataylor0123" class="btn-social btn-outline" target=newtab><i class="fa fa-fw fa-angellist"></i></a>
         </li>
         <li>
             <a href="https://twitter.com/ataylor0123" class="btn-social btn-outline" target=newtab><i class="fa fa-fw fa-twitter"></i></a>
         </li>
         <li>
             <a href="https://instagram.com/ataylor0123/" class="btn-social btn-outline" target=newtab><i class="fa fa-fw fa-instagram"></i></a>
+        </li>
+        <li>
+            <a href="https://keybase.io/ataylor" class="btn-social btn-outline" target=newtab><i class="fa fa-fw fa-key"></i></a>
         </li>
       </ul>
     </div>

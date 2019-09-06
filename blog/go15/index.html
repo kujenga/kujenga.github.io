@@ -6,8 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Diving into the changes in the latest Go release, particularly with runtime and garbage collector improvements">
     <meta name="author" content="Aaron Taylor">
+
+    <meta name="google-site-verification" content="tiuapB3N9vmYdU9_nwX6t_iHEqjDsOaSi8sRQ_CppY4" />
+
     <link rel="icon" href="../../favicon.ico">
     <link rel="canonical" href="https://ataylor.io/blog/go15/">
+
     
 
     <title>Aaron Taylor - Improvements in Go 1.5</title>
@@ -17,25 +21,29 @@ window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){va
 ;NREUM.info={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",licenseKey:"ce48477ed0",applicationID:"7067223",sa:1,agent:"js-agent.newrelic.com/nr-632.min.js"}
 </script>
     
-    
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-56787812-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
 
-      ga('create', 'UA-56787812-1', 'auto');
-      ga('send', 'pageview');
-    </script>
 
     
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-<link href='http://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
 
 
-<link type="text/css" rel="stylesheet" href="https://ataylor.io/css/styles.css"/>
+<link type="text/css" rel="stylesheet" href="/css/styles.css"/>
+
 
 
 
@@ -55,9 +63,9 @@ window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){va
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li><a href="https://ataylor.io/blog">Blog</a></li>
+        <li><a href="/blog">Blog</a></li>
         
-        <li><a href="https://ataylor.io/about">About</a></li>
+        <li><a href="/about">About</a></li>
       </ul>
     </div>
   </div>
@@ -72,13 +80,13 @@ window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){va
 
 <p>With the relatively recent release Go 1.5, there are a variety of interesting areas to look at in regards to what&rsquo;s changed with the language. As one would expect based on both Go&rsquo;s philosophy and it&rsquo;s <a href="http://golang.org/doc/go1compat">future compatibility</a> guidelines, not much has changed from a language feature standpoint. Still, there a number of exciting under-the-hood enhancements in the latest release.</p>
 
-<h3 id="package-system:3614b4ac0fb81e46a552fe4b0f2199ab">Package system</h3>
+<h3 id="package-system">Package system</h3>
 
 <p>New functionality has been introduced to the packaging system in two ways. First, support for <a href="https://docs.google.com/document/d/1e8kOo3r51b2BWtTs_1uADIA5djfXhPT36s6eHVRIvaU/edit">internal packages</a> has been brought out of it&rsquo;s experimental phase in Go 1.4 where it was being testing within GOROOT to now apply to packages within the GOPATH. This will allow Go packages to divide their different functions up into more logical components without exposing APIs in unwanted ways. This is a pattern that the <a href="https://godoc.org/google.golang.org/appengine/internal">App Engine SDK</a> uses well, wrapping supporting functionality that is largely auto-generated in internal packages, making the logical code exposed through the API more readable and easier to maintain.</p>
 
 <p>The second addition to the package system was experimental <a href="https://docs.google.com/document/d/1Bz5-UB7g2uPBdOx-rw5t9MxJwkfpx90cqG9AFL0JAYo/edit">support for vendored</a> packages, adding behavior to the go tools that will perform a local lookup of packages within a <code>vendor/</code> directory before going into the GOPATH. This mirrors what tools such as <a href="https://github.com/tools/godep"><code>godep</code></a> have previously been doing through manipulation of the GOPATH environment variable. Additionally, because this is an experimental change, it is only enabled if <code>GO15VENDOREXPERIMENT=1</code> is set in the environment the go command is executed in.</p>
 
-<h3 id="compiler-and-runtime-written-in-go:3614b4ac0fb81e46a552fe4b0f2199ab">Compiler and Runtime written in Go</h3>
+<h3 id="compiler-and-runtime-written-in-go">Compiler and Runtime written in Go</h3>
 
 <p>The entire go tool chain has been overhauled to be written entirely in Go. Previously, much of go was written in C because it provided a much easier path to get started with a new language. The bootstrapping process for Go was much easier because it could be built with just a C compiler. Still, the reasons were listed in a 2013 <a href="https://docs.google.com/document/d/1P3BLR31VA8cvLJLfMibSuTdwTuF7WWLux71CYD0eeD8/edit">proposal</a> of this change.</p>
 
@@ -101,7 +109,7 @@ window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){va
 
 <p>Still, in the short term this switch has slowed the Go build process by about a <a href="https://golang.org/doc/go1.5#performance">factor of two</a>. However, what the translation process did preserve was the correctness of the compiler, thus avoiding the introduction of new bugs that would inevitably come with a rewrite. In this way, the translated code can be incrementally improved through more idiomatic use of the language to bring performance of the already lightning fast compilation up to where it was previously.</p>
 
-<h3 id="true-parallelism:3614b4ac0fb81e46a552fe4b0f2199ab">True Parallelism</h3>
+<h3 id="true-parallelism">True Parallelism</h3>
 
 <p>The changes I am most excited about in Go 1.5 are the performance improvements. One large step forward has occurred in the ability to perform parallel computation. If you&rsquo;re a more experienced Gopher, you&rsquo;ve most likely seen Rob Pike&rsquo;s talk, <a href="https://youtu.be/cN_DpYBzKso">Concurrency is not Parallelism</a>, which explains the important distinction between these concepts. Previously, Go offered a default of concurrency without parallelism. In the latest release, that default has changed.</p>
 
@@ -111,7 +119,7 @@ window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){va
 
 <p>There were a number of improvements that enabled this shift&hellip;</p>
 
-<h3 id="gc-improvements:3614b4ac0fb81e46a552fe4b0f2199ab">GC improvements</h3>
+<h3 id="gc-improvements">GC improvements</h3>
 
 <p>The changes to the garbage collector that have come to fruition in Go 1.5 are primarily focused on reducing latency. Go has historically had a stop the world (STW) garbage collector. This type of collector prevents mutation of state while the garbage collection algorithm is taking place, which basically creates a binary set of applications states, one for program execution, and another for garbage collection. In 1.5, the garbage collection becomes concurrent. This means that instead of two distinct and wholly separate application states, the garbage collection phases happen concurrently with program execution.</p>
 
@@ -121,15 +129,15 @@ window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){va
 
 <p>The performance improvements that were seen as a result of this are quite remarkable, with GC pause time for large, multi-gigabyte heaps dropping three orders of magnitude from seconds to milliseconds. With these changes, the Go runtime team hopes that wait times for GC will no longer be a barrier for the use of Go, expanding it&rsquo;s applicability to more performance-critical systems. Additionally, these improvements allow Go programs to improve without modification as hardware improves, particularly through increases in the number of available cores.</p>
 
-<h3 id="google-app-engine-support:3614b4ac0fb81e46a552fe4b0f2199ab">Google App Engine support</h3>
+<h3 id="google-app-engine-support">Google App Engine support</h3>
 
 <p>At <a href="https://www.meta.sc">Meta</a> we use Google App Engine to host the majority of our infrastructure as I&rsquo;ve <a href="https://www.meta.sc/tech/startclean/">blogged about</a>. We are very much looking forward to the availability of Go 1.5 on App Engine, and is <a href="https://groups.google.com/forum/#!topic/google-appengine-go/as9wUqT77YU">planned</a>, but unfortunately there is <a href="https://groups.google.com/forum/#!topic/google-appengine-go/Vg5F0sUMTFc">no definitive date</a> as of yet. We&rsquo;ll be moving to is as soon as it&rsquo;s available!</p>
 
-<h3 id="conclusions:3614b4ac0fb81e46a552fe4b0f2199ab">Conclusions</h3>
+<h3 id="conclusions">Conclusions</h3>
 
 <p>Go 1.5 solidifies the Go tool chain by moving it to Go and brings performance improvements that increase it&rsquo;s competitiveness with other high-performance languages. There are plenty of other changes that I didn&rsquo;t get a chance to touch on, so be sure to take a look at the full <a href="https://golang.org/doc/go1.5">Go 1.5 Release Notes</a> for other details.</p>
 
-<h2 id="references:3614b4ac0fb81e46a552fe4b0f2199ab">References</h2>
+<h2 id="references">References</h2>
 
 <ul>
 <li><a href="https://blog.golang.org/go1.5">Go 1.5 is released - The Go Blog</a></li>
@@ -191,9 +199,11 @@ window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){va
             <h4>Other Posts</h4>
             <ul>
             
-                <li><a href="https://meta.sc/tech/swiftobjc" title="Facilitating Idiomatic Swift with Objective-C" target=newtab>Facilitating Idiomatic Swift with Objective-C</a></li>
+                <li><a href="https://www.meta.sc/tech/govendoring/" title="Vendoring Dependencies in Go" target=newtab>Vendoring Dependencies in Go</a></li>
             
                 <li><a href="https://meta.sc/tech/startclean" title="Starting Clean" target=newtab>Starting Clean</a></li>
+            
+                <li><a href="https://meta.sc/tech/swiftobjc" title="Facilitating Idiomatic Swift with Objective-C" target=newtab>Facilitating Idiomatic Swift with Objective-C</a></li>
             
             </ul>
         </div>
@@ -229,13 +239,16 @@ window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){va
             <a href="https://github.com/kujenga" class="btn-social btn-outline" target=newtab><i class="fa fa-fw fa-github"></i></a>
         </li>
         <li>
-            <a href="https://angel.co/aaron-taylor-1" class="btn-social btn-outline" target=newtab><i class="fa fa-fw fa-angellist"></i></a>
+            <a href="https://angel.co/ataylor0123" class="btn-social btn-outline" target=newtab><i class="fa fa-fw fa-angellist"></i></a>
         </li>
         <li>
             <a href="https://twitter.com/ataylor0123" class="btn-social btn-outline" target=newtab><i class="fa fa-fw fa-twitter"></i></a>
         </li>
         <li>
             <a href="https://instagram.com/ataylor0123/" class="btn-social btn-outline" target=newtab><i class="fa fa-fw fa-instagram"></i></a>
+        </li>
+        <li>
+            <a href="https://keybase.io/ataylor" class="btn-social btn-outline" target=newtab><i class="fa fa-fw fa-key"></i></a>
         </li>
       </ul>
     </div>
